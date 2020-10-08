@@ -99,6 +99,7 @@ const letsPlayButton = document.querySelector('#lets-play-button');
 const welcomeArea = document.querySelector('#welcome-area')
 
 //Document element selectors Gameplay - Question Div
+const gameplayArea = document.querySelector('#gameplay-area');
 const nextButton = document.querySelector('#next-button');
 const scoreDisplay = document.querySelector('#current-score')
 const questionNumDisplay = document.querySelector('#question-number');
@@ -108,7 +109,7 @@ const categoryDisplay = document.querySelector('#category');
 const questionTextDisplay =  document.querySelector('#question-text');
 
 //Document element selectors Gameplay - Answers Div
-const answersDisplayArea = document.querySelector('#answer-info');
+const answersDisplayArea = document.querySelector('#answer-area');
 const answerButtonA = document.querySelector('#answer-a');
 const answerButtonB = document.querySelector('#answer-b');
 const answerButtonC = document.querySelector('#answer-c');
@@ -130,11 +131,23 @@ letsPlayButton.addEventListener('click', (event) => {
 //Event handler for 'Next' Button - will go to the next question
 nextButton.addEventListener('click', (event) => {
 	event.preventDefault();
+	questionIndex++;
+	console.log()
+	if (questionIndex >= 10) {
+		gameOver()
+	} else {
+		askQuestion()	
+	}
+
 });
 
 //Event handler for selecting answer button click
 answersDisplayArea.addEventListener('click', (event) => {
 	event.preventDefault();
+	console.log(event.target)
+	gradeAnswer(event);
+	
+
 });
 
 
@@ -143,19 +156,14 @@ answersDisplayArea.addEventListener('click', (event) => {
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
 function gameStart() {
 	score = 0;
-	resetScreen();
+	welcomeArea.innerHTML='';
 	askQuestion();
-}
-
-//Resets the screen to blank
-function resetScreen() {
-	welcomeArea.innerHTML = '';
 }
 
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
 	//Set all of the inner text of the document elements to current question
-	questionNumDisplay.innerText = `Question ${questionIndex}`;
+	questionNumDisplay.innerText = `Question ${questionIndex+1}`;
 	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[questionIndex].difficulty}`;
 	categoryDisplay.innerText = `Category: ${tenQuestionDatabase[questionIndex].category}`;
 	questionTextDisplay.innerText =  tenQuestionDatabase[questionIndex].question
@@ -173,34 +181,34 @@ function askQuestion() {
 	//Update Answer buttons with answers in a random order
 	let answersArr = tenQuestionDatabase[questionIndex].incorrect_answers;
 	answersArr.push(tenQuestionDatabase[questionIndex].correct_answer);	
-	//console.log(answersArr)
 	
 	let arrStartIndex1 = Math.floor(Math.random() * answersArr.length);
-	//console.log(arrStartIndex1)
 	answerButtonA.innerText = answersArr[arrStartIndex1]
 	answersArr.splice(arrStartIndex1,1)
-	//console.log(answersArr)
 	
 	let arrStartIndex2 = Math.floor(Math.random() * answersArr.length);
-	//console.log(arrStartIndex2);
 	answerButtonB.innerText = answersArr[arrStartIndex2];
 	answersArr.splice(arrStartIndex2, 1);
-	//console.log(answersArr);
 	
 	let arrStartIndex3 = Math.floor(Math.random() * answersArr.length);
-	//console.log(arrStartIndex3);
 	answerButtonC.innerText = answersArr[arrStartIndex3];
 	answersArr.splice(arrStartIndex3, 1);
-	//console.log(answersArr);
 	
 	answerButtonD.innerText = answersArr[0]
-	
 }
 	
-
-	
-function gradeAnswer() {	
-	
+function gradeAnswer(event) {	
+	if (event.target.innerText === tenQuestionDatabase[questionIndex].correct_answer){
+		if (tenQuestionDatabase[questionIndex].difficulty = 'hard') {
+			score += 20;
+		} else if ((tenQuestionDatabase[questionIndex].difficulty = 'medium')) {
+			score += 10
+		} else if ((tenQuestionDatabase[questionIndex].difficulty = 'easy')) {
+			score +=5 ;
+		} else {
+			score += 0;
+		}
+	} else	
 }
 
 function gameOver() {
