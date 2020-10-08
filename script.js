@@ -89,21 +89,24 @@ const hard = 20;
 const medium = 10;
 const easy = 5
 
-//Document elements selectors
+//Document element selectors
 const username = document.querySelector('input[type=text]');
 const letsPlayButton = document.querySelector('#letsPlayButton');
 
 //Document element creators
-const questionNum = document.createElement('h1');
-const questionDifficulty = document.createElement('span');
-const questionPointValue = document.createElement('span');
-const questionCategory = document.createElement('div');
-const questionText =  document.createElement('div');
-const answerChoices = document.createElement('div')
+const questionNumDisplay = document.createElement('h1');
+const difficultyDisplay = document.createElement('span');
+const pointValueDisplay = document.createElement('span');
+const categoryDisplay = document.createElement('div');
+const questionTextDisplay =  document.createElement('div');
+const answerChoicesDisplay = document.createElement('div')
 const scoreDisplay = document.createElement('div')
 
+//Misc variables
+let questionIndex = 0;
 
 
+//Event handler for the Let's Play button that is click after entering a name.  It triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
 	event.preventDefault();
 	console.log(username)
@@ -114,38 +117,52 @@ letsPlayButton.addEventListener('click', (event) => {
 	}
 })
 
+
+//Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
 function gameStart() {
 	const currentUsername = username.value;
-	console.log(currentUsername)
 	score = 0;
-	console.log(score);
 	resetScreen();
 	askQuestion();
 }
 
+//Resets the screen to blank
 function resetScreen() {
 	document.body.innerHTML = '';
 }
 
+//Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
-	for (let i = 0; i < tenQuestionDatabase.length; i++) {
-		questionNum.innerText = `Question ${i}`;
-		questionDifficulty.innerText = tenQuestionDatabase[i].difficulty;
-		questionCategory.innerText = tenQuestionDatabase[i].category;
-		questionText.innerText =  tenQuestionDatabase[i].question
-		answerChoices.innerText = `${tenQuestionDatabase[i].correct_answer} , ${tenQuestionDatabase[i].incorrect_answers[0]} ,${tenQuestionDatabase[i].incorrect_answers[1]}, ${tenQuestionDatabase[i].incorrect_answers[2]} `
-		scoreDisplay.innerHTML = score
-		if (tenQuestionDatabase[i].difficulty = 'hard') {
-			questionPointValue.innerText = tostring(hard);
-		} else if (tenQuestionDatabase[i].difficulty = 'medium') {
-			questionPointValue.innerText = toString(medium);
-		} else if (tenQuestionDatabase[i].difficulty = 'easy') {
-			questionPointValue.innerText = toString(easy);
-		} else {
-			questionPointValue.innerText = '0';
-		}
+	//set all of the inner text of the document elements to current question
+	questionNumDisplay.innerText = `Question OPEN`;
+	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[questionIndex].difficulty}`;
+	categoryDisplay.innerText = `Category: ${tenQuestionDatabase[questionIndex].category}`;
+	questionTextDisplay.innerText =  tenQuestionDatabase[questionIndex].question
+	answerChoicesDisplay.innerText = `
+	\n${tenQuestionDatabase[questionIndex].correct_answer}  
+	\n${tenQuestionDatabase[questionIndex].incorrect_answers[0]} 
+	\n${tenQuestionDatabase[questionIndex].incorrect_answers[1]} 
+	\n${tenQuestionDatabase[questionIndex].incorrect_answers[2]}`;
+	scoreDisplay.innerHTML = `Score: ${score}`
+	if ((tenQuestionDatabase[questionIndex].difficulty = 'hard')) {
+		pointValueDisplay.innerText = hard.toString();
+	} else if ((tenQuestionDatabase[questionIndex].difficulty = 'medium')) {
+		pointValueDisplay.innerText = medium.toString();
+	} else if ((tenQuestionDatabase[questionIndex].difficulty = 'easy')) {
+		pointValueDisplay.innerText = easy.toString();
+	} else {
+		pointValueDisplay.innerText = 'N/A';
 	}
+	//Append question elements to the body
+	document.body.appendChild(questionNumDisplay)
+	document.body.appendChild(difficultyDisplay);
+	document.body.appendChild(pointValueDisplay);
+	document.body.appendChild(categoryDisplay);
+	document.body.appendChild(questionTextDisplay);
+	document.body.appendChild(answerChoicesDisplay);
+	document.body.appendChild(scoreDisplay);
 }
+
 
 function gradeAnswer() {
 	
