@@ -93,12 +93,12 @@ const easy = 5;
 let questionIndex = 0;
 let currentUsername='';
 
-//Document element selectors Welcome/Instructions/Scoring Section
+//Document element selectors Welcome Area Section
 const username = document.getElementById('username-input');
 const letsPlayButton = document.querySelector('#lets-play-button');
 const welcomeArea = document.querySelector('#welcome-area')
 
-//Document element selectors Gameplay Section
+//Document element selectors Gameplay - Question Div
 const nextButton = document.querySelector('#next-button');
 const scoreDisplay = document.querySelector('#current-score')
 const questionNumDisplay = document.querySelector('#question-number');
@@ -106,8 +106,13 @@ const difficultyDisplay = document.querySelector('#difficulty-level');
 const pointValueDisplay = document.querySelector('#point-value');
 const categoryDisplay = document.querySelector('#category');
 const questionTextDisplay =  document.querySelector('#question-text');
-const answersDisplayArea = document.querySelector('#answer-info')
 
+//Document element selectors Gameplay - Answers Div
+const answersDisplayArea = document.querySelector('#answer-info');
+const answerButtonA = document.querySelector('#answer-a');
+const answerButtonB = document.querySelector('#answer-b');
+const answerButtonC = document.querySelector('#answer-c');
+const answerButtonD = document.querySelector('#answer-d');
 
 ////////////Event Handlers//////////////
 
@@ -149,16 +154,11 @@ function resetScreen() {
 
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
-	//set all of the inner text of the document elements to current question
+	//Set all of the inner text of the document elements to current question
 	questionNumDisplay.innerText = `Question ${questionIndex}`;
 	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[questionIndex].difficulty}`;
 	categoryDisplay.innerText = `Category: ${tenQuestionDatabase[questionIndex].category}`;
 	questionTextDisplay.innerText =  tenQuestionDatabase[questionIndex].question
-	answersDisplayArea.innerText = `
-	\n${tenQuestionDatabase[questionIndex].correct_answer}  
-	\n${tenQuestionDatabase[questionIndex].incorrect_answers[0]} 
-	\n${tenQuestionDatabase[questionIndex].incorrect_answers[1]} 
-	\n${tenQuestionDatabase[questionIndex].incorrect_answers[2]}`;
 	scoreDisplay.innerHTML = `Score: ${score}`
 	if ((tenQuestionDatabase[questionIndex].difficulty = 'hard')) {
 		pointValueDisplay.innerText = hard.toString();
@@ -169,11 +169,37 @@ function askQuestion() {
 	} else {
 		pointValueDisplay.innerText = 'N/A';
 	}
+	
+	//Update Answer buttons with answers in a random order
+	let answersArr = tenQuestionDatabase[questionIndex].incorrect_answers;
+	answersArr.push(tenQuestionDatabase[questionIndex].correct_answer);	
+	//console.log(answersArr)
+	
+	let arrStartIndex1 = Math.floor(Math.random() * answersArr.length);
+	//console.log(arrStartIndex1)
+	answerButtonA.innerText = answersArr[arrStartIndex1]
+	answersArr.splice(arrStartIndex1,1)
+	//console.log(answersArr)
+	
+	let arrStartIndex2 = Math.floor(Math.random() * answersArr.length);
+	//console.log(arrStartIndex2);
+	answerButtonB.innerText = answersArr[arrStartIndex2];
+	answersArr.splice(arrStartIndex2, 1);
+	//console.log(answersArr);
+	
+	let arrStartIndex3 = Math.floor(Math.random() * answersArr.length);
+	//console.log(arrStartIndex3);
+	answerButtonC.innerText = answersArr[arrStartIndex3];
+	answersArr.splice(arrStartIndex3, 1);
+	//console.log(answersArr);
+	
+	answerButtonD.innerText = answersArr[0]
+	
 }
+	
 
-
-
-function gradeAnswer() {
+	
+function gradeAnswer() {	
 	
 }
 
