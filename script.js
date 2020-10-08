@@ -83,11 +83,15 @@ const tenQuestionDatabase = [
 	}
 ];
 
-//Scoring Variables
+
+////////////Variables//////////////
+
+//Scoring & Other Tracking Variables
 let score = 0;
 const hard = 20;
 const medium = 10;
-const easy = 5
+const easy = 5;
+let questionIndex;
 
 //Document element selectors
 const username = document.querySelector('input[type=text]');
@@ -101,10 +105,10 @@ const categoryDisplay = document.createElement('div');
 const questionTextDisplay =  document.createElement('div');
 const answerChoicesDisplay = document.createElement('div')
 const scoreDisplay = document.createElement('div')
+const nextButton = document.createElement('button')
 
-//Misc variables
-let questionIndex = 0;
 
+////////////Event Handlers//////////////
 
 //Event handler for the Let's Play button that is click after entering a name.  It triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
@@ -117,6 +121,30 @@ letsPlayButton.addEventListener('click', (event) => {
 	}
 })
 
+//Event handler for 'Next' Button - will go to the next question
+nextButton.addEventListener('click', (event) => {
+	event.preventDefault();
+	if (username.value === '' || username.value === username.placeholder) {
+		return alert('You need to enter a username to continue');
+	} else {
+		gameOver();
+	}
+});
+
+//Event handler for selecting answer button click
+
+
+
+
+
+
+
+
+
+
+
+
+////////////Functions//////////////
 
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
 function gameStart() {
@@ -124,6 +152,7 @@ function gameStart() {
 	score = 0;
 	resetScreen();
 	askQuestion();
+	questionIndex = 0;
 }
 
 //Resets the screen to blank
@@ -164,6 +193,15 @@ function askQuestion() {
 }
 
 
+
+
+
+
+
 function gradeAnswer() {
+	
+}
+
+function gameOver() {
 	
 }
