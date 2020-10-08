@@ -93,19 +93,19 @@ const medium = 10;
 const easy = 5;
 let questionIndex;
 
-//Document element selectors
-const username = document.querySelector('input[type=text]');
-const letsPlayButton = document.querySelector('#letsPlayButton');
+//Document element selectors Welcome/Instructions/Scoring Section
+const username = document.querySelector('#username');
+const letsPlayButton = document.querySelector('#lets-play-button');
 
-//Document element creators
-const questionNumDisplay = document.createElement('h1');
-const difficultyDisplay = document.createElement('span');
-const pointValueDisplay = document.createElement('span');
-const categoryDisplay = document.createElement('div');
-const questionTextDisplay =  document.createElement('div');
-const answerChoicesDisplay = document.createElement('div')
-const scoreDisplay = document.createElement('div')
-const nextButton = document.createElement('button')
+//Document element selectors Gameplay Section
+const nextButton = document.querySelector('#next-button');
+const scoreDisplay = document.querySelector('#current-score')
+const questionNumDisplay = document.querySelector('#question-number');
+const difficultyDisplay = document.querySelector('#difficulty-level');
+const pointValueDisplay = document.querySelector('#point-value');
+const categoryDisplay = document.querySelector('#category');
+const questionTextDisplay =  document.querySelector('#question-text');
+const answersDisplayArea = document.querySelector('#answer-info')
 
 
 ////////////Event Handlers//////////////

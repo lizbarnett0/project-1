@@ -7,26 +7,49 @@
 		<title>Socially Distant Pub Quiz</title>
 	</head>
 	<body>
-		<h1>Welcome to Socially Distant Pub Quiz!</h1>
-		<div>Are you feeling down because you can’t go to your local watering hole with your pals to play trivia? Don’t worry because we have the next best thing...Socially Distant Pub Quiz! Test your knowledge of random facts and useless information right from the comfort of your home!
-		</div>
-		<div id="instructionsAndScoring">
+
+		<main>
+
+		<section id="welcome-screen">
+			<h1>Welcome to Socially Distant Pub Quiz!</h1>
+			<p>Are you feeling down because you can’t go to your local watering hole with your pals to play trivia? Don’t worry because we have the next best thing...Socially Distant Pub Quiz! Test your knowledge of random facts and useless information right from the comfort of your home!
+			</p>
+		</section>
+		
+		<section id="instructions-scoring">
 			<h3>Instructions</h3>
 			<p>Choose a team name. Just like real-life pub quizzes, the punnier the name, the better! Enter your team name in the box below and click submit when ready to start. There will be 10 questions ranging in difficulty and category.  All questions are multiple choice. As soon as you select your answer </p>
 			<h3>Scoring</h3>
-			<ul>
+			<ul id="scoring-list">
 				<li>EASY questions are worth 5 points</li>
 				<li>MEDIUM questions are worth 10 points</li> 
 				<li>HARD questions are worth 20 points</li>
 				<li>There are 5 easy questions, 3 medium questions, and 2 hard questions.</li>
 				<li>If you get 10/10, you get 55 bonus points for a max score of 150 points.</li>
 			</ul>
-		</div>
-		<form id="usernameForm">
-			<input id="username" type="text" placeholder="Enter Name Here">
-			<input id="letsPlayButton" type="button" value="Let's Play!">
-		</form>
-		<button id="nextButton">Next</button>
+			<form id="usernameForm">
+				<input id="username-input" type="text" placeholder="Enter Name Here">
+				<input id="lets-play-button" type="button" value="Let's Play!">
+			</form>
+		</section>
+
+		<section id="gameplay-area">
+			<h2 id="current-score"></h2>
+			<div id="question-info">
+				<h1 id="question-number"></h1>
+				<span id="difficulty-level"></span>
+				<span id="point-value"></span>
+				<h5 id="category"></h5>
+				<p id="question-text"></p>
+			</div>
+			<div id="answer-info">
+			</div>
+			<button id="next-button">Next</button>
+		</section>
+		
+		
+		</main>
+		
 		<script src="script.js"></script>
 	</body>
 </html>

@@ -1,0 +1,1 @@
+Used dots as a model for html organization and arragement
