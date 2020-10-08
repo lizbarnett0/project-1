@@ -83,7 +83,6 @@ const tenQuestionDatabase = [
 	}
 ];
 
-
 ////////////Variables//////////////
 
 //Scoring & Other Tracking Variables
@@ -91,11 +90,13 @@ let score = 0;
 const hard = 20;
 const medium = 10;
 const easy = 5;
-let questionIndex;
+let questionIndex = 0;
+let currentUsername='';
 
 //Document element selectors Welcome/Instructions/Scoring Section
-const username = document.querySelector('#username');
+const username = document.getElementById('username-input');
 const letsPlayButton = document.querySelector('#lets-play-button');
+const welcomeArea = document.querySelector('#welcome-area')
 
 //Document element selectors Gameplay Section
 const nextButton = document.querySelector('#next-button');
@@ -110,11 +111,11 @@ const answersDisplayArea = document.querySelector('#answer-info')
 
 ////////////Event Handlers//////////////
 
-//Event handler for the Let's Play button that is click after entering a name.  It triggers the begining of the game.
+//Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
 	event.preventDefault();
-	console.log(username)
-	if (username.value === '' || username.value === username.placeholder) {
+	let currentUsername = username.value;
+	if (currentUsername === '' || currentUsername === username.placeholder) {
 		return alert('You need to enter a username to continue')
 	} else {
 		gameStart();
@@ -124,50 +125,36 @@ letsPlayButton.addEventListener('click', (event) => {
 //Event handler for 'Next' Button - will go to the next question
 nextButton.addEventListener('click', (event) => {
 	event.preventDefault();
-	if (username.value === '' || username.value === username.placeholder) {
-		return alert('You need to enter a username to continue');
-	} else {
-		gameOver();
-	}
 });
 
 //Event handler for selecting answer button click
-
-
-
-
-
-
-
-
-
-
+answersDisplayArea.addEventListener('click', (event) => {
+	event.preventDefault();
+});
 
 
 ////////////Functions//////////////
 
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
 function gameStart() {
-	const currentUsername = username.value;
 	score = 0;
 	resetScreen();
 	askQuestion();
-	questionIndex = 0;
 }
 
 //Resets the screen to blank
 function resetScreen() {
-	document.body.innerHTML = '';
+	welcomeArea.innerHTML = '';
 }
 
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
 	//set all of the inner text of the document elements to current question
-	questionNumDisplay.innerText = `Question OPEN`;
+	questionNumDisplay.innerText = `Question ${questionIndex}`;
 	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[questionIndex].difficulty}`;
 	categoryDisplay.innerText = `Category: ${tenQuestionDatabase[questionIndex].category}`;
 	questionTextDisplay.innerText =  tenQuestionDatabase[questionIndex].question
-	answerChoicesDisplay.innerText = `
+	answersDisplayArea.innerText = `
 	\n${tenQuestionDatabase[questionIndex].correct_answer}  
 	\n${tenQuestionDatabase[questionIndex].incorrect_answers[0]} 
 	\n${tenQuestionDatabase[questionIndex].incorrect_answers[1]} 
@@ -182,19 +169,7 @@ function askQuestion() {
 	} else {
 		pointValueDisplay.innerText = 'N/A';
 	}
-	//Append question elements to the body
-	document.body.appendChild(questionNumDisplay)
-	document.body.appendChild(difficultyDisplay);
-	document.body.appendChild(pointValueDisplay);
-	document.body.appendChild(categoryDisplay);
-	document.body.appendChild(questionTextDisplay);
-	document.body.appendChild(answerChoicesDisplay);
-	document.body.appendChild(scoreDisplay);
 }
-
-
-
-
 
 
 
