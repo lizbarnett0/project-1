@@ -1,3 +1,4 @@
+//Source of static database questions is opentdb.com
 const tenQuestionDatabase = [
 	{
 		category: 'Entertainment: Music',
@@ -82,4 +83,37 @@ const tenQuestionDatabase = [
 	}
 ];
 
-console.log(tenQuestionDatabase)
+const username = document.querySelector('input[type=text]');
+const letsPlayButton = document.querySelector('#letsPlayButton');
+let score = 0;
+
+
+letsPlayButton.addEventListener('click', (event) => {
+	event.preventDefault();
+	gameStart();
+
+})
+
+
+function gameStart() {
+	const currentUsername = username.value;
+	console.log(currentUsername)
+	score = 0;
+	console.log(score);
+	resetScreen();
+	askQuestion();
+	
+}
+
+function resetScreen() {
+	document.body.innerHTML = '';
+
+}
+
+function askQuestion() {
+
+}
+
+function gradeAnswer(params) {
+	
+}
