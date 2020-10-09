@@ -120,7 +120,7 @@ const categoryDisplay = document.querySelector('#category');
 const questionTextDisplay = document.querySelector('#question-text');
 
 //Document element selectors Gameplay - Answers Div
-const answersDisplayArea = document.querySelector('#answer-area');
+const answersDisplayArea = document.querySelector('.answer-area');
 const answerMessage = document.querySelector('#answer-message');
 const allAnswerButtons = document.querySelectorAll('.answer-button');
 const answerButtonA = document.querySelector('#answer-a');
@@ -131,6 +131,7 @@ const answerButtonD = document.querySelector('#answer-d');
 //////////Initial Game State///////////////
 nextButton.style.display = 'none';
 answersDisplayArea.style.display = 'none'
+gameplayArea.style.display = 'none';
 
 ////////////Event Handlers//////////////
 
@@ -141,6 +142,7 @@ letsPlayButton.addEventListener('click', (event) => {
 	if (currentUsername === '' || currentUsername === username.placeholder) {
 		return alert('You must enter a username to continue!');
 	} else {
+		gameplayArea.style.display = 'block';
 		answersDisplayArea.style.display = 'block';
 		gameStart();
 	}
