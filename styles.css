@@ -9,8 +9,9 @@ button {
     padding: 10px 20px;
     margin: 10px auto;
     border: 10px;
+    border-radius: 8px;
+    
 }
-
 
 /* Landing Page */
 .welcome-area {
@@ -58,27 +59,28 @@ button {
     margin-bottom: 30px;
 }
 
-/* @media (min-width: 800px) {
+#category {
+    margin: 7px;
+}
+
+#answer-message{
+    margin: 18px;
+    font-size: 25px;
+    color: #c2d5db;
+}
+
+
+.game-over .level-winner {
+  opacity: 1;
+  pointer-events: all;
+}
+
+
+
+@media (min-width: 800px) {
     
     .welcome-area {
         height: 100%;
         width: 75%;
 	}
-    
-    .gameplay-area {
-		height: 100%;
-        display: grid;	
-        grid-template-columns: 1fr 2fr 1fr;
-        grid-template-rows: 1fr 2fr 2fr;
-    }
-
-    .answer-area {
-        grid-column: 2;
-    }   
-
-    #question-text {
-    font-size: 15px;
-    border: solid;
-    margin: 25px;
-    }
-} */
+}
