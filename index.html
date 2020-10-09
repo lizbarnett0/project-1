@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="styles.css" />
 		<title>Socially Distant Pub Quiz</title>
@@ -9,23 +10,23 @@
 	<body>
 
 		<main>
-		<section id="welcome-area">
+		<section class="welcome-area">
 		<div id="welcome-screen">
-			<h1>Welcome to the Socially Distant Pub Quiz!</h1>
-			<p>Are you feeling down because you can’t go to your local watering hole with your pals to play trivia? Don’t worry because we have the next best thing...Socially Distant Pub Quiz! Test your knowledge of random facts and useless information right from the comfort of your home!
+			<div>The</div>
+			<div>Socially Distant</div>
+			<div id="pub-quiz-text">&#127866; PUB QUIZ &#127866;</div>
+			<p>Are you feeling down because you can’t go to your local watering hole with your pals to play trivia? Don’t worry! We have the next best thing...The Socially Distant Pub Quiz! Test your knowledge of random facts and useless information right from the comfort of your home!
 			</p>
 		</div>
 		<div id="instructions-scoring">
 			<h3>Instructions</h3>
-			<p>Choose a team name. Just like real-life pub quizzes, the punnier the name, the better! Enter your team name in the box below and click submit when ready to start. There will be 10 questions ranging in difficulty and category.  All questions are multiple choice. </p>
+			<p>Choose a team name. Just like real-life pub quizzes, the punnier the name, the better! here will be 10 questions ranging in difficulty and category. All questions are multiple choice. There are 5 easy questions, 3 medium questions, and 2 hard questions.Enter your team name in the box below and click submit when ready to start. </p>
 			<h3>Scoring</h3>
-			<ul id="scoring-list">
-				<li>EASY questions are worth 5 points</li>
-				<li>MEDIUM questions are worth 10 points</li> 
-				<li>HARD questions are worth 20 points</li>
-				<li>There are 5 easy questions, 3 medium questions, and 2 hard questions.</li>
-				<li>If you get 10/10, you get 55 bonus points for a max score of 150 points.</li>
-			</ul>
+			<p>&#128994; EASY questions are worth 5 points</p>
+			<p>&#128993; MEDIUM questions are worth 10 points</p> 
+			<p></p>&#128308; HARD questions are worth 20 points</p>
+			<p>There are 5 easy questions, 3 medium questions, and 2 hard questions. <br>If you get all the questions, you get 55 bonus points for a maximum score of 150 points.</p>
+	
 			<form id="usernameForm">
 				<input id="username-input" type="text" placeholder="Enter Name Here">
 				<input id="lets-play-button" type="button" value="Let's Play!">
@@ -38,7 +39,6 @@
 			<div id="question-info">
 				<h3 id="question-number"></h3>
 				<span id="difficulty-level"></span>
-				<span id="point-value"></span>
 				<div id="category"></div>
 				<div id="question-text"></div>
 			</div>

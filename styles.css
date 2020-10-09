@@ -1,6 +1,44 @@
+body {
+    font-family: 'Fjalla One', sans-serif;
+}
+
+button {
+        display: block;
+        padding: 5px;
+        margin: 10px;
+    }
+#question-text{
+    font-size: 20px;
+}
+
+.welcome-area {
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    
+}
+
+#pub-quiz-text {
+    font-size: 50px;
+}
+/* Gameplay Area */
 .gameplay-area {
-    display: grid;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
 }
-ul { 
-    list-style-type: none;
-}
+
+.gameplay-area
+
+
+@media (min-width: 800px) {
+    .welcome-area {
+		height: 100%;
+	}
+    
+    .gameplay-area {
+		height: 100%;
+        display: grid;	
+        grid-template-columns: 1fr 3fr 1fr;
+        grid-template-rows: 1fr 3fr 1fr;
+    }

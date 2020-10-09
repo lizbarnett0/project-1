@@ -107,7 +107,7 @@ let currentUsername = '';
 //Document element selectors Welcome Area Section
 const username = document.getElementById('username-input');
 const letsPlayButton = document.querySelector('#lets-play-button');
-const welcomeArea = document.querySelector('#welcome-area');
+const welcomeArea = document.querySelector('.welcome-area');
 
 //Document element selectors Gameplay - Question Div
 const gameplayArea = document.querySelector('.gameplay-area');
@@ -129,16 +129,8 @@ const answerButtonC = document.querySelector('#answer-c');
 const answerButtonD = document.querySelector('#answer-d');
 
 //////////Initial Game State///////////////
-nextButton.disabled = true;
-nextButton.style.visibility = 'hidden';
-answerButtonA.disabled = true;
-answerButtonA.style.visibility = 'hidden';
-answerButtonB.disabled = true;
-answerButtonB.style.visibility = 'hidden';
-answerButtonC.disabled = true;
-answerButtonC.style.visibility = 'hidden';
-answerButtonD.disabled = true;
-answerButtonD.style.visibility = 'hidden';
+nextButton.style.display = 'none';
+answersDisplayArea.style.display = 'none'
 
 ////////////Event Handlers//////////////
 
@@ -149,14 +141,7 @@ letsPlayButton.addEventListener('click', (event) => {
 	if (currentUsername === '' || currentUsername === username.placeholder) {
 		return alert('You must enter a username to continue!');
 	} else {
-		answerButtonA.disabled = false;
-		answerButtonA.style.visibility = 'visible';
-		answerButtonB.disabled = false;
-		answerButtonB.style.visibility = 'visible';
-		answerButtonC.disabled = false;
-		answerButtonC.style.visibility = 'visible';
-		answerButtonD.disabled = false;
-		answerButtonD.style.visibility = 'visible';
+		answersDisplayArea.style.display = 'block';
 		gameStart();
 	}
 });
@@ -185,11 +170,13 @@ nextButton.addEventListener('click', (event) => {
 //Event handler for selecting answer button click
 answersDisplayArea.addEventListener('click', (event) => {
 	event.preventDefault();
-	gradeAnswer(event);
-	answerButtonA.disabled = true;
-	answerButtonB.disabled = true;
-	answerButtonC.disabled = true;
-	answerButtonD.disabled = true;
+	if (event.target.tagName === 'BUTTON') {
+		gradeAnswer(event);
+		answerButtonA.disabled = true;
+		answerButtonB.disabled = true;
+		answerButtonC.disabled = true;
+		answerButtonD.disabled = true;
+	}
 });
 
 ////////////Functions//////////////
@@ -246,29 +233,24 @@ function gradeAnswer(event) {
 	allAnswerButtons.disabled = true;
 	tenQuestionDatabase[questionIndex].difficulty;
 	if (event.target.innerText === tenQuestionDatabase[questionIndex].correct_answer) {
-		answerMessage.innerText = 'Wow, you are so smart!';
+		answerMessage.innerText = 'Wow, you are so smart! 🧠 '
 		event.target.style.backgroundColor = 'DarkSeaGreen';
 		if (tenQuestionDatabase[questionIndex].difficulty === 'hard') {
 			score += 20;
-			console.log('20');
-			console.log(tenQuestionDatabase[questionIndex].difficulty);
 		} else if (tenQuestionDatabase[questionIndex].difficulty === 'medium') {
 			score += 10;
-			console.log('10');
 		} else if (tenQuestionDatabase[questionIndex].difficulty === 'easy') {
 			score += 5;
-			console.log('5');
 		} else {
 			score += 0;
-			console.log('0');
 		}
 	} else {
 		event.target.style.backgroundColor = 'PaleVioletRed';
-		answerMessage.innerText = `I'm sorry, that answer is incorrect.  The correct answer is: ${tenQuestionDatabase[questionIndex].correct_answer}`;
+		answerMessage.innerText = `NOPE!  The correct answer is: ${tenQuestionDatabase[questionIndex].correct_answer} \nYou should really study some more! 📚 `;
 	}
 	scoreDisplay.innerHTML = `Score: ${score}`;
-	nextButton.disabled = false;
-	nextButton.style.visibility = 'visible';
+	//nextButton.disabled = false;
+	nextButton.style.display = 'inline';
 }
 
 function gameOver() {
