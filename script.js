@@ -110,7 +110,7 @@ const letsPlayButton = document.querySelector('#lets-play-button');
 const welcomeArea = document.querySelector('#welcome-area');
 
 //Document element selectors Gameplay - Question Div
-const gameplayArea = document.querySelector('#gameplay-area');
+const gameplayArea = document.querySelector('.gameplay-area');
 const nextButton = document.querySelector('#next-button');
 const scoreDisplay = document.querySelector('#current-score');
 const questionNumDisplay = document.querySelector('#question-number');
@@ -203,6 +203,7 @@ function gameStart() {
 
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
+	nextButton.visibility = 'hidden'
 	//Set all of the inner text of the document elements to current question
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
 	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[
