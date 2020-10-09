@@ -190,12 +190,10 @@ function gameStart() {
 
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
-	nextButton.visibility = 'hidden'
+	nextButton.style.display = 'none'
 	//Set all of the inner text of the document elements to current question
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
-	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[
-		questionIndex
-	].difficulty.toUpperCase()}`;
+	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[questionIndex].difficulty.toUpperCase()}`;
 	categoryDisplay.innerText = `${tenQuestionDatabase[questionIndex].category}`;
 	questionTextDisplay.innerText = tenQuestionDatabase[questionIndex].question;
 	scoreDisplay.innerHTML = `Score: ${score}`;
@@ -231,7 +229,7 @@ function askQuestion() {
 
 function gradeAnswer(event) {
 	allAnswerButtons.disabled = true;
-	tenQuestionDatabase[questionIndex].difficulty;
+	//tenQuestionDatabase[questionIndex].difficulty;
 	if (event.target.innerText === tenQuestionDatabase[questionIndex].correct_answer) {
 		answerMessage.innerText = 'Wow, you are so smart! 🧠 '
 		event.target.style.backgroundColor = 'DarkSeaGreen';
