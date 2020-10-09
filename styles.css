@@ -28,31 +28,34 @@ button {
 .gameplay-area {
     text-align: center;
     margin: auto;
-    padding: 20px 10px;
-    max-width: 70vw;
-    
+    max-width: 80vw;
 }
 
 #current-score{
-    float: right;
+    text-align: right; 
     margin: auto;
-    padding: 20px
+    
 }
 
 .answer-area {
     align-items: center;
-}
-
-#question-info {
-    max-width: 70%;
-    text-align: center;
     margin: auto;
-}
+} 
+
+ #question-info {
+  margin: auto;
+  padding: 20px;
+  border: 20px;  
+} 
 
 #question-text{
     font-size: 20px;
-    
-    margin: 25px;
+    margin: 25px auto 0 auto;
+}
+
+#question-number{
+    font-size: 30px;
+    margin-bottom: 30px;
 }
 
 /* @media (min-width: 800px) {
