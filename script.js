@@ -121,6 +121,7 @@ const questionTextDisplay = document.querySelector('#question-text');
 
 //Document element selectors Gameplay - Answers Div
 const answersDisplayArea = document.querySelector('#answer-area');
+const answerMessage = document.querySelector('#answer-message');
 const allAnswerButtons = document.querySelectorAll('.answer-button');
 const answerButtonA = document.querySelector('#answer-a');
 const answerButtonB = document.querySelector('#answer-b');
@@ -163,12 +164,21 @@ letsPlayButton.addEventListener('click', (event) => {
 //Event handler for 'Next' Button - will go to the next question
 nextButton.addEventListener('click', (event) => {
 	event.preventDefault();
+	answerButtonA.disabled = false;
+	answerButtonA.style.backgroundColor = 'lightGray';
+	answerButtonB.disabled = false;
+	answerButtonB.style.backgroundColor = 'lightGray';
+	answerButtonC.disabled = false;
+	answerButtonC.style.backgroundColor = 'lightGray';
+	answerButtonD.disabled = false;
+	answerButtonD.style.backgroundColor = 'lightGray';
+	answerMessage.innerText = '';
+
 	questionIndex++;
-	allAnswerButtons.style.backgoundColor = 'gray';
-	if (questionIndex >= 10) {
-		gameOver();
-	} else {
+	if (questionIndex < 10) {
 		askQuestion();
+	} else {
+		gameOver();
 	}
 });
 
@@ -176,6 +186,10 @@ nextButton.addEventListener('click', (event) => {
 answersDisplayArea.addEventListener('click', (event) => {
 	event.preventDefault();
 	gradeAnswer(event);
+	answerButtonA.disabled = true;
+	answerButtonB.disabled = true;
+	answerButtonC.disabled = true;
+	answerButtonD.disabled = true;
 });
 
 ////////////Functions//////////////
@@ -194,7 +208,7 @@ function askQuestion() {
 	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[
 		questionIndex
 	].difficulty.toUpperCase()}`;
-	categoryDisplay.innerText = `Category: ${tenQuestionDatabase[questionIndex].category}`;
+	categoryDisplay.innerText = `${tenQuestionDatabase[questionIndex].category}`;
 	questionTextDisplay.innerText = tenQuestionDatabase[questionIndex].question;
 	scoreDisplay.innerHTML = `Score: ${score}`;
 
@@ -229,23 +243,33 @@ function askQuestion() {
 
 function gradeAnswer(event) {
 	allAnswerButtons.disabled = true;
-	if (
-		event.target.innerText === tenQuestionDatabase[questionIndex].correct_answer
-	) {
-		event.target.style.backgroundColor = 'green';
-		if ((tenQuestionDatabase[questionIndex].difficulty = 'hard')) {
+	tenQuestionDatabase[questionIndex].difficulty;
+	if (event.target.innerText === tenQuestionDatabase[questionIndex].correct_answer) {
+		answerMessage.innerText = 'Wow, you are so smart!';
+		event.target.style.backgroundColor = 'DarkSeaGreen';
+		if (tenQuestionDatabase[questionIndex].difficulty === 'hard') {
 			score += 20;
-		} else if ((tenQuestionDatabase[questionIndex].difficulty = 'medium')) {
+			console.log('20');
+			console.log(tenQuestionDatabase[questionIndex].difficulty);
+		} else if (tenQuestionDatabase[questionIndex].difficulty === 'medium') {
 			score += 10;
-		} else if ((tenQuestionDatabase[questionIndex].difficulty = 'easy')) {
+			console.log('10');
+		} else if (tenQuestionDatabase[questionIndex].difficulty === 'easy') {
 			score += 5;
+			console.log('5');
 		} else {
 			score += 0;
+			console.log('0');
 		}
 	} else {
-		event.target.style.backgroundColor = 'red';
-		console.log('incorrect');
+		event.target.style.backgroundColor = 'PaleVioletRed';
+		answerMessage.innerText = `I'm sorry, that answer is incorrect.  The correct answer is: ${tenQuestionDatabase[questionIndex].correct_answer}`;
 	}
+	scoreDisplay.innerHTML = `Score: ${score}`;
+	nextButton.disabled = false;
+	nextButton.style.visibility = 'visible';
 }
 
-function gameOver() {}
+function gameOver() {
+	gameplayArea.innerHTML = '';
+}
