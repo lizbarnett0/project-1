@@ -70,13 +70,21 @@ button {
 }
 
 
-.game-over .level-winner {
-  opacity: 1;
-  pointer-events: all;
+.game-over {
+    text-align: center;
+    margin: auto;
+    max-width: 80vw;
+    font-size: 50px;
+    vertical-align: middle;
+}
+
+#final-score {
+    margin: 30px;
+
 }
 
 
-
+#
 @media (min-width: 800px) {
     
     .welcome-area {

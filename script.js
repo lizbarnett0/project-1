@@ -128,17 +128,25 @@ const answerButtonB = document.querySelector('#answer-b');
 const answerButtonC = document.querySelector('#answer-c');
 const answerButtonD = document.querySelector('#answer-d');
 
+//Document element selectors game-over
+const gameOverDisplayArea = document.querySelector('.game-over')
+const newGameButton = document.querySelector('#new-game-button')
+const finalScore = document.querySelector('#final-score')
+const gameOverMessage = document.querySelector("#game-over-message")
+
 //////////Initial Game State///////////////
 nextButton.style.display = 'none';
 answersDisplayArea.style.display = 'none'
 gameplayArea.style.display = 'none';
+gameOverDisplayArea.style.display = 'none';
+newGameButton.style.display = 'none';
 
 ////////////Event Handlers//////////////
 
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
 	event.preventDefault();
-	let currentUsername = username.value;
+	currentUsername = username.value;
 	if (currentUsername === '' || currentUsername === username.placeholder) {
 		return alert('You must enter a username to continue!');
 	} else {
@@ -165,6 +173,7 @@ nextButton.addEventListener('click', (event) => {
 	if (questionIndex < 10) {
 		askQuestion();
 	} else {
+		gameOverDisplayArea.style.display = 'inline';
 		gameOver();
 	}
 });
@@ -181,6 +190,15 @@ answersDisplayArea.addEventListener('click', (event) => {
 	}
 });
 
+newGameButton.addEventListener('click',(event) => {
+	score = 0;
+	gameOverDisplayArea.style.display = 'none';
+	gameplayArea.style.display = 'block';
+	answersDisplayArea.style.display = 'block';
+	gameStart();
+})
+
+
 ////////////Functions//////////////
 
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
@@ -193,30 +211,25 @@ function gameStart() {
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
 	nextButton.style.display = 'none'
+	console.log(questionIndex)
+
 	//Set all of the inner text of the document elements to current question
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
 	difficultyDisplay.innerText = `Difficulty: ${tenQuestionDatabase[questionIndex].difficulty.toUpperCase()}`;
 	categoryDisplay.innerText = `${tenQuestionDatabase[questionIndex].category}`;
 	questionTextDisplay.innerText = tenQuestionDatabase[questionIndex].question;
-	scoreDisplay.innerHTML = `Score: ${score}`;
-
-	// if ((tenQuestionDatabase[questionIndex].difficulty = 'hard')) {
-	// 	pointValueDisplay.innerText = hard.toString();
-	// } else if ((tenQuestionDatabase[questionIndex].difficulty = 'medium')) {
-	// 	pointValueDisplay.innerText = medium.toString();
-	// } else if ((tenQuestionDatabase[questionIndex].difficulty = 'easy')) {
-	// 	pointValueDisplay.innerText = easy.toString();
-	// } else {
-	// 	pointValueDisplay.innerText = 'N/A';
-	// }
+	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
 
 	//Update Answer buttons with answers in a random order
-	let answersArr = tenQuestionDatabase[questionIndex].incorrect_answers;
+	let answersArr =[];
+	answersArr = tenQuestionDatabase[questionIndex].incorrect_answers;
 	answersArr.push(tenQuestionDatabase[questionIndex].correct_answer);
+	console.log(answersArr);
 
 	let arrStartIndex1 = Math.floor(Math.random() * answersArr.length);
 	answerButtonA.innerText = answersArr[arrStartIndex1];
 	answersArr.splice(arrStartIndex1, 1);
+	console.log(answersArr);
 
 	let arrStartIndex2 = Math.floor(Math.random() * answersArr.length);
 	answerButtonB.innerText = answersArr[arrStartIndex2];
@@ -227,6 +240,7 @@ function askQuestion() {
 	answersArr.splice(arrStartIndex3, 1);
 
 	answerButtonD.innerText = answersArr[0];
+	console.log(answersArr)
 }
 
 function gradeAnswer(event) {
@@ -248,11 +262,22 @@ function gradeAnswer(event) {
 		event.target.style.backgroundColor = 'PaleVioletRed';
 		answerMessage.innerText = `NOPE!  The correct answer is: ${tenQuestionDatabase[questionIndex].correct_answer} \nYou should really study some more! 📚 `;
 	}
-	scoreDisplay.innerHTML = `Score: ${score}`;
+	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
 	//nextButton.disabled = false;
 	nextButton.style.display = 'inline';
 }
 
 function gameOver() {
-	gameplayArea.innerHTML = '';
+	gameplayArea.style.display = 'none';
+	newGameButton.style.display = 'block';
+	questionIndex = 0;
+	finalScore.innerText = `${currentUsername}'s Final Score is ${score}`;
+	if (score < 30) {
+		gameOverMessage.innerText = 'That wasn\'t a great round...keep working at it.'
+	} else if (score < 70) {
+		gameOverMessage.innerText = 'Pretty good work, keep it up!';
+	} else {
+		gameOverMessage.innerText = 'Look at the big brain on you! \nGenius Level. \mGreat job!';
+	}
+	
 }
