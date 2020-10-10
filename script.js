@@ -170,7 +170,7 @@ nextButton.addEventListener('click', (event) => {
 	answerMessage.innerText = '';
 
 	questionIndex++;
-	if (questionIndex < 10) {
+	if (questionIndex < 2) {
 		askQuestion();
 	} else {
 		gameOverDisplayArea.style.display = 'inline';
@@ -191,6 +191,7 @@ answersDisplayArea.addEventListener('click', (event) => {
 });
 
 newGameButton.addEventListener('click',(event) => {
+	questionIndex = 0;
 	score = 0;
 	gameOverDisplayArea.style.display = 'none';
 	gameplayArea.style.display = 'block';
@@ -203,6 +204,7 @@ newGameButton.addEventListener('click',(event) => {
 
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
 function gameStart() {
+	questionIndex = 0;
 	score = 0;
 	welcomeArea.innerHTML = '';
 	askQuestion();
@@ -211,7 +213,6 @@ function gameStart() {
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
 	nextButton.style.display = 'none'
-	console.log(questionIndex)
 
 	//Set all of the inner text of the document elements to current question
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
@@ -222,30 +223,35 @@ function askQuestion() {
 
 	//Update Answer buttons with answers in a random order
 	let answersArr =[];
-	answersArr = tenQuestionDatabase[questionIndex].incorrect_answers;
+	let arrStartIndex1;
+	let arrStartIndex2;
+	let arrStartIndex3;;
+	let tempIncorrectArr = tenQuestionDatabase[questionIndex].incorrect_answers
+	
+	
+	answersArr = tempIncorrectArr;
+	console.log()
 	answersArr.push(tenQuestionDatabase[questionIndex].correct_answer);
-	console.log(answersArr);
 
-	let arrStartIndex1 = Math.floor(Math.random() * answersArr.length);
+	arrStartIndex1 = Math.floor(Math.random() * answersArr.length);
 	answerButtonA.innerText = answersArr[arrStartIndex1];
 	answersArr.splice(arrStartIndex1, 1);
-	console.log(answersArr);
 
-	let arrStartIndex2 = Math.floor(Math.random() * answersArr.length);
+	arrStartIndex2 = Math.floor(Math.random() * answersArr.length);
 	answerButtonB.innerText = answersArr[arrStartIndex2];
 	answersArr.splice(arrStartIndex2, 1);
 
-	let arrStartIndex3 = Math.floor(Math.random() * answersArr.length);
+	arrStartIndex3 = Math.floor(Math.random() * answersArr.length);
 	answerButtonC.innerText = answersArr[arrStartIndex3];
 	answersArr.splice(arrStartIndex3, 1);
 
 	answerButtonD.innerText = answersArr[0];
-	console.log(answersArr)
+	console.log(tenQuestionDatabase[questionIndex].incorrect_answers);
+
 }
 
 function gradeAnswer(event) {
 	allAnswerButtons.disabled = true;
-	//tenQuestionDatabase[questionIndex].difficulty;
 	if (event.target.innerText === tenQuestionDatabase[questionIndex].correct_answer) {
 		answerMessage.innerText = 'Wow, you are so smart! 🧠 '
 		event.target.style.backgroundColor = 'DarkSeaGreen';
@@ -263,14 +269,12 @@ function gradeAnswer(event) {
 		answerMessage.innerText = `NOPE!  The correct answer is: ${tenQuestionDatabase[questionIndex].correct_answer} \nYou should really study some more! 📚 `;
 	}
 	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
-	//nextButton.disabled = false;
 	nextButton.style.display = 'inline';
 }
 
 function gameOver() {
 	gameplayArea.style.display = 'none';
 	newGameButton.style.display = 'block';
-	questionIndex = 0;
 	finalScore.innerText = `${currentUsername}'s Final Score is ${score}`;
 	if (score < 30) {
 		gameOverMessage.innerText = 'That wasn\'t a great round...keep working at it.'
@@ -279,5 +283,4 @@ function gameOver() {
 	} else {
 		gameOverMessage.innerText = 'Look at the big brain on you! \nGenius Level. \mGreat job!';
 	}
-	
 }
