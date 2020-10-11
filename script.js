@@ -170,7 +170,7 @@ nextButton.addEventListener('click', (event) => {
 	answerMessage.innerText = '';
 
 	questionIndex++;
-	if (questionIndex < 2) {
+	if (questionIndex < 10) {
 		askQuestion();
 	} else {
 		gameOverDisplayArea.style.display = 'inline';
@@ -222,32 +222,49 @@ function askQuestion() {
 	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
 
 	//Update Answer buttons with answers in a random order
-	let answersArr =[];
+	let answersArrIndex = [0,1,2,3]
 	let arrStartIndex1;
 	let arrStartIndex2;
-	let arrStartIndex3;;
-	let tempIncorrectArr = tenQuestionDatabase[questionIndex].incorrect_answers
+	let arrStartIndex3;
+	let tempIndex;
 	
+	arrStartIndex1 = Math.floor(Math.random() * (answersArrIndex.length));
+	tempIndex = answersArrIndex[arrStartIndex1]
+	if (tempIndex === 3) {
+		answerButtonA.innerText = tenQuestionDatabase[questionIndex].correct_answer;
+	} else {
+		answerButtonA.innerText = tenQuestionDatabase[questionIndex].incorrect_answers[tempIndex];
+	}
+	answersArrIndex.splice(arrStartIndex1, 1);
+
+	arrStartIndex2 = Math.floor(Math.random() * (answersArrIndex.length));
+	tempIndex = answersArrIndex[arrStartIndex2];
+	if (tempIndex === 3) {
+		answerButtonB.innerText = tenQuestionDatabase[questionIndex].correct_answer;
+	} else {
+		answerButtonB.innerText =
+			tenQuestionDatabase[questionIndex].incorrect_answers[tempIndex];
+	}
+	answersArrIndex.splice(arrStartIndex2, 1);
+
 	
-	answersArr = tempIncorrectArr;
-	console.log()
-	answersArr.push(tenQuestionDatabase[questionIndex].correct_answer);
+	arrStartIndex3 = Math.floor(Math.random() * (answersArrIndex.length));
+	tempIndex = answersArrIndex[arrStartIndex3];
+	if (tempIndex === 3) {
+		answerButtonC.innerText = tenQuestionDatabase[questionIndex].correct_answer;
+	} else {
+		answerButtonC.innerText = tenQuestionDatabase[questionIndex].incorrect_answers[tempIndex];
+	}
+	answersArrIndex.splice(arrStartIndex3, 1);
 
-	arrStartIndex1 = Math.floor(Math.random() * answersArr.length);
-	answerButtonA.innerText = answersArr[arrStartIndex1];
-	answersArr.splice(arrStartIndex1, 1);
 
-	arrStartIndex2 = Math.floor(Math.random() * answersArr.length);
-	answerButtonB.innerText = answersArr[arrStartIndex2];
-	answersArr.splice(arrStartIndex2, 1);
-
-	arrStartIndex3 = Math.floor(Math.random() * answersArr.length);
-	answerButtonC.innerText = answersArr[arrStartIndex3];
-	answersArr.splice(arrStartIndex3, 1);
-
-	answerButtonD.innerText = answersArr[0];
-	console.log(tenQuestionDatabase[questionIndex].incorrect_answers);
-
+	tempIndex = answersArrIndex[0];	
+	if (tempIndex === 3) {
+		answerButtonD.innerText = tenQuestionDatabase[questionIndex].correct_answer;
+	} else {
+		answerButtonD.innerText = tenQuestionDatabase[questionIndex].incorrect_answers[tempIndex];
+	}
+	
 }
 
 function gradeAnswer(event) {
@@ -281,6 +298,42 @@ function gameOver() {
 	} else if (score < 70) {
 		gameOverMessage.innerText = 'Pretty good work, keep it up!';
 	} else {
-		gameOverMessage.innerText = 'Look at the big brain on you! \nGenius Level. \mGreat job!';
+		gameOverMessage.innerText = 'Look at the big brain on you! \nGenius Level. \nGreat job!';
 	}
 }
+
+
+
+
+//////////////API Integration/////////////
+
+//API Variables
+// const easyUrl ='https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple';
+// const medUrl = 'https://opentdb.com/api.php?amount=3&difficulty=medium&type=multiple';
+// const hardUrl = `https://opentdb.com/api.php?amount=2&difficulty=hard&type=multiple`;
+// let tempQuestionArr = [];
+// var easyArr;
+// let medArr = [];
+// let hardArr = [];
+
+
+// async function saveFetchedData(url) {
+// 	const easyQuestions = await fetch(url);
+// 	return easyQuestions.json()
+// 	};
+
+
+// // fetch(medUrl)
+// // 	.then((res) => res.json())
+// // 	.then((resJson) => {
+// // 		medArr = resJson.results;
+// //
+// // 	});
+
+// // fetch(hardUrl)
+// // 	.then((res) => res.json())
+// // 	.then((resJson) => {
+// // 		hardArr = resJson.results
+// // 
+// // 	});	
+// }

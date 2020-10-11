@@ -1,4 +1,5 @@
 Used dots as a model for html organization and arragement
+https://www.reddit.com/r/learnjavascript/comments/9zo92w/assign_fetch_response_to_variable/
 
 
 Requirements:
