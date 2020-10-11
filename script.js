@@ -213,6 +213,7 @@ function gameStart() {
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
 	nextButton.style.display = 'none'
+	questionCall()
 
 	//Set all of the inner text of the document elements to current question
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
@@ -308,32 +309,27 @@ function gameOver() {
 //////////////API Integration/////////////
 
 //API Variables
-// const easyUrl ='https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple';
-// const medUrl = 'https://opentdb.com/api.php?amount=3&difficulty=medium&type=multiple';
-// const hardUrl = `https://opentdb.com/api.php?amount=2&difficulty=hard&type=multiple`;
-// let tempQuestionArr = [];
-// var easyArr;
-// let medArr = [];
-// let hardArr = [];
+let currentDifficulty = ''
+let currentQuestion = {}
+//const url = `https://opentdb.com/api.php?amount=1&difficulty=${currentDifficulty}&type=multiple`;
+const easyURL = 'https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple'
+const medURL = 'https://opentdb.com/api.php?amount=1&difficulty=medium&type=multiple'
+const hardURL ='https://opentdb.com/api.php?amount=1&difficulty=hard&type=multiple';
 
-
-// async function saveFetchedData(url) {
-// 	const easyQuestions = await fetch(url);
-// 	return easyQuestions.json()
-// 	};
-
-
-// // fetch(medUrl)
-// // 	.then((res) => res.json())
-// // 	.then((resJson) => {
-// // 		medArr = resJson.results;
-// //
-// // 	});
-
-// // fetch(hardUrl)
-// // 	.then((res) => res.json())
-// // 	.then((resJson) => {
-// // 		hardArr = resJson.results
-// // 
-// // 	});	
-// }
+function questionCall() {
+	if (questionIndex < 5) {
+		//currentDifficulty = 'easy';
+		fetch(url)
+		.then((res) => res.json())
+		.then((resJson) => {
+				
+			 });
+		
+		
+	} else if (questionIndex < 9) {
+		//currentDifficulty = 'medium';
+		
+	} else {
+		//currentDifficulty = 'hard';
+	}
+}
