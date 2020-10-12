@@ -10,8 +10,26 @@ button {
     margin: 10px auto;
     border: 10px;
     border-radius: 8px;
-    
+    width: 50%;
+        
 }
+
+input[type=text] {
+    padding:5px; 
+    border:2px solid #ccc; 
+    border-radius: 5px;
+
+}
+
+input[type=button] {
+    display: block;
+    padding: 5px;
+    margin: 8px auto;
+    border: 10px;
+    border-radius: 8px;
+    width: 18%;
+}
+
 
 /* Landing Page */
 .welcome-area {

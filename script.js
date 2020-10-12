@@ -1,5 +1,3 @@
-
-
 ////////////Variables//////////////
 
 //Scoring & Other Tracking Variables
@@ -51,7 +49,7 @@ newGameButton.style.display = 'none';
 
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
-	event.preventDefault();
+	// 	event.preventDefault();
 	currentUsername = username.value;
 	if (currentUsername === '' || currentUsername === username.placeholder) {
 		return alert('You must enter a username to continue!');
@@ -272,4 +270,3 @@ function gradeAnswerAPI(event) {
 	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
 	nextButton.style.display = 'inline';
 }
-
