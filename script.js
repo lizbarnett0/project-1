@@ -47,6 +47,26 @@ newGameButton.style.display = 'none';
 
 ////////////Event Handlers//////////////
 
+//Grabbing Elements
+const instructionsButton = document.getElementById('openInstructionsModal');
+const instructionsModal = document.getElementById('instructionsModal');
+const close = document.getElementById('close')
+
+//Functions
+const openModal = () => {
+  instructionsModal.style.display = 'block';
+}
+
+const closeModal = () => {
+  instructionsModal.style.display = 'none';
+}
+
+//Event Listeners
+instructionsButton.addEventListener('click', openModal);
+close.addEventListener('click', closeModal)
+
+
+
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
 	// 	event.preventDefault();
@@ -118,6 +138,7 @@ function gameStart() {
 //Triggers the Game Over Screen once 10 questions have been asked
 function gameOver() {
 	gameplayArea.style.display = 'none';
+	gameOverDisplayArea.style.display = 'block'
 	newGameButton.style.display = 'block';
 	finalScore.innerText = `${currentUsername}'s Final Score is ${score}`;
 	if (score < 30) {
@@ -128,6 +149,7 @@ function gameOver() {
 		gameOverMessage.innerText = 'Look at the big brain on you! \nGenius Level. \nGreat job!';
 	}
 }
+
 
 
 //Function to Decode HTML in from Trivia Database
