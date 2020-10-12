@@ -1,4 +1,4 @@
-//Source of static database questions is opentdb.com
+//Database of questions used to build the MVP of the game. Source of  questions: opentdb.com
 const tenQuestionDatabase = [
 	{
 		category: 'Entertainment: Music',
@@ -159,6 +159,7 @@ letsPlayButton.addEventListener('click', (event) => {
 //Event handler for 'Next' Button - will go to the next question
 nextButton.addEventListener('click', (event) => {
 	event.preventDefault();
+	answersDisplayArea.setAttribute('data-correct', '');
 	answerButtonA.disabled = false;
 	answerButtonA.style.backgroundColor = 'lightGray';
 	answerButtonB.disabled = false;
@@ -171,7 +172,8 @@ nextButton.addEventListener('click', (event) => {
 
 	questionIndex++;
 	if (questionIndex < 10) {
-		askQuestion();
+		//askQuestion();
+		askQuestionAPI();
 	} else {
 		gameOverDisplayArea.style.display = 'inline';
 		gameOver();
@@ -182,7 +184,8 @@ nextButton.addEventListener('click', (event) => {
 answersDisplayArea.addEventListener('click', (event) => {
 	event.preventDefault();
 	if (event.target.tagName === 'BUTTON') {
-		gradeAnswer(event);
+		//gradeAnswer(event);
+		gradeAnswerAPI(event);
 		answerButtonA.disabled = true;
 		answerButtonB.disabled = true;
 		answerButtonC.disabled = true;
@@ -207,13 +210,13 @@ function gameStart() {
 	questionIndex = 0;
 	score = 0;
 	welcomeArea.innerHTML = '';
-	askQuestion();
+	//askQuestion();
+	askQuestionAPI();
 }
 
 //Pulls a question from the database and displays it and all relevant characteristics on the screen.
 function askQuestion() {
 	nextButton.style.display = 'none'
-	questionCall()
 
 	//Set all of the inner text of the document elements to current question
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
@@ -303,33 +306,132 @@ function gameOver() {
 	}
 }
 
-
-
-
 //////////////API Integration/////////////
 
 //API Variables
-let currentDifficulty = ''
-let currentQuestion = {}
-//const url = `https://opentdb.com/api.php?amount=1&difficulty=${currentDifficulty}&type=multiple`;
-const easyURL = 'https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple'
-const medURL = 'https://opentdb.com/api.php?amount=1&difficulty=medium&type=multiple'
-const hardURL ='https://opentdb.com/api.php?amount=1&difficulty=hard&type=multiple';
+const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
 
-function questionCall() {
+
+//API Functions
+function askQuestionAPI() {
+	nextButton.style.display = 'none';
+	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
+	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
+
 	if (questionIndex < 5) {
-		//currentDifficulty = 'easy';
-		fetch(url)
-		.then((res) => res.json())
-		.then((resJson) => {
-				
-			 });
-		
-		
+		fetch(`${url}&difficulty=easy`)
+			.then((res) => res.json())
+			.then((resJson) => {
+				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
+				categoryDisplay.innerText = `${resJson.results[0].category}`;
+				questionTextDisplay.innerText = resJson.results[0].question;
+				answersDisplayArea.setAttribute('data-correct', resJson.results[0].correct_answer);
+				console.log(answersDisplayArea)
+				answerAssignmentAPI(resJson);
+
+				console.log(resJson)
+			});
 	} else if (questionIndex < 9) {
-		//currentDifficulty = 'medium';
-		
+		fetch(`${url}&difficulty=medium`)
+			.then((res) => res.json())
+			.then((resJson) => {
+				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
+				categoryDisplay.innerText = `${resJson.results[0].category}`;
+				questionTextDisplay.innerText = resJson.results[0].question;
+				answerAssignmentAPI(resJson);
+				console.log(resJson);
+			});
 	} else {
-		//currentDifficulty = 'hard';
+		fetch(`${url}&difficulty=easy`)
+			.then((res) => res.json())
+			.then((resJson) => {
+				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
+				categoryDisplay.innerText = `${resJson.results[0].category}`;
+				questionTextDisplay.innerText = resJson.results[0].question;
+				answerAssignmentAPI(resJson);	
+				console.log(resJson);
+			});
 	}
+	
+}
+
+//Assign answers from API question
+function answerAssignmentAPI(resJson) {
+	let answersArrIndex = [0, 1, 2, 3];
+	let arrStartIndex1;
+	let arrStartIndex2;
+	let arrStartIndex3;
+	let tempIndex;
+	answersDisplayArea.setAttribute('data-correct',resJson.results[0].correct_answer);
+	answerButtonA.setAttribute('data-answer','')
+	answerButtonB.setAttribute('data-answer', '');
+	answerButtonC.setAttribute('data-answer','')
+	answerButtonD.setAttribute('data-answer', '');
+
+	arrStartIndex1 = Math.floor(Math.random() * answersArrIndex.length);
+	tempIndex = answersArrIndex[arrStartIndex1];
+	
+	if (tempIndex === 3) {
+		answerButtonA.innerText = resJson.results[0].correct_answer;
+		answerButtonA.setAttribute('data-answer','correct')
+	} else {
+		answerButtonA.innerText =resJson.results[0].incorrect_answers[tempIndex];
+		answerButtonA.setAttribute('data-answer', 'incorrect');
+	}
+	answersArrIndex.splice(arrStartIndex1, 1);
+
+	arrStartIndex2 = Math.floor(Math.random() * answersArrIndex.length);
+	tempIndex = answersArrIndex[arrStartIndex2];
+	
+	if (tempIndex === 3) {
+		answerButtonB.innerText = resJson.results[0].correct_answer;
+		answerButtonB.setAttribute('data-answer', 'correct');
+	} else {
+		answerButtonB.innerText = resJson.results[0].incorrect_answers[tempIndex];
+		answerButtonB.setAttribute('data-answer', 'incorrect');
+	}
+	answersArrIndex.splice(arrStartIndex2, 1);
+
+	arrStartIndex3 = Math.floor(Math.random() * answersArrIndex.length);
+	tempIndex = answersArrIndex[arrStartIndex3];
+	if (tempIndex === 3) {
+		answerButtonC.innerText = resJson.results[0].correct_answer;
+		answerButtonC.setAttribute('data-answer', 'correct');
+	} else {
+		answerButtonC.innerText = resJson.results[0].incorrect_answers[tempIndex];
+		answerButtonC.setAttribute('data-answer', 'incorrect');
+	}
+	answersArrIndex.splice(arrStartIndex3, 1);
+
+	tempIndex = answersArrIndex[0];
+	if (tempIndex === 3) {
+		answerButtonD.innerText = resJson.results[0].correct_answer;
+		answerButtonD.setAttribute('data-answer', 'correct');
+	} else {
+		answerButtonD.innerText = resJson.results[0].incorrect_answers[tempIndex];
+	}
+	
+}
+
+function gradeAnswerAPI(event,resJson) {
+	allAnswerButtons.disabled = true;
+	console.log(event.target)
+	if (event.target.dataset.answer === 'correct') {
+		answerMessage.innerText = 'Wow, you are so smart! 🧠 ';
+		event.target.style.backgroundColor = 'DarkSeaGreen';
+		if (difficultyDisplay.innerText === 'Difficulty: HARD') {
+			score += 20;
+		} else if (difficultyDisplay.innerText === 'Difficulty: MEDIUM') {
+			score += 10;
+		} else if (difficultyDisplay.innerText === 'Difficulty: EASY') {
+			score += 5;
+		} else {
+			score += 0;
+		}
+	} else {
+		event.target.style.backgroundColor = 'PaleVioletRed';
+		answerMessage.innerText = `NOPE!  The correct answer is: ${answersDisplayArea.dataset.correct} \nYou should really study some more! 📚 `
+	}
+	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
+	nextButton.style.display = 'inline';
 }
