@@ -65,6 +65,9 @@ input[type=button] {
     width: 18%;
 }
 
+#category-selection {
+    display: none;
+}
 
 /* Landing Page */
 .welcome-area {
