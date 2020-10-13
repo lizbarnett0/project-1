@@ -1,17 +1,23 @@
 ////////////Variables//////////////
 
-//Scoring & Other Tracking Variables
+//Scoring, tracking, and other game-wide variables
 let score = 0;
 const hard = 20;
 const medium = 10;
 const easy = 5;
 let questionIndex = 0;
 let currentUsername = '';
+const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
+let currentCategory = '';
 
 //Document element selectors Welcome Area Section
 const username = document.getElementById('username-input');
 const letsPlayButton = document.querySelector('#lets-play-button');
 const welcomeArea = document.querySelector('.welcome-area');
+const categorySelectionArea = document.querySelector('#category-section')
+const instructionsButton = document.getElementById('openInstructionsModal');
+const instructionsModal = document.getElementById('instructionsModal');
+const close = document.getElementById('close');
 
 //Document element selectors Gameplay - Question Div
 const gameplayArea = document.querySelector('.gameplay-area');
@@ -44,38 +50,37 @@ answersDisplayArea.style.display = 'none'
 gameplayArea.style.display = 'none';
 gameOverDisplayArea.style.display = 'none';
 newGameButton.style.display = 'none';
+categorySelectionArea.style.display = 'none'
 
 ////////////Event Handlers//////////////
 
-//Grabbing Elements
-const instructionsButton = document.getElementById('openInstructionsModal');
-const instructionsModal = document.getElementById('instructionsModal');
-const close = document.getElementById('close')
-
-//Functions
-const openModal = () => {
-  instructionsModal.style.display = 'block';
-}
-
-const closeModal = () => {
-  instructionsModal.style.display = 'none';
-}
-
-//Event Listeners
 instructionsButton.addEventListener('click', openModal);
 close.addEventListener('click', closeModal)
 
-
-
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
-	// 	event.preventDefault();
+	event.preventDefault();
 	currentUsername = username.value;
 	if (currentUsername === '' || currentUsername === username.placeholder) {
 		return alert('You must enter a username to continue!');
 	} else {
-		gameplayArea.style.display = 'block';
-		answersDisplayArea.style.display = 'block';
+		//gameplayArea.style.display = 'block';
+		//answersDisplayArea.style.display = 'block';
+		//gameStart();
+		welcomeArea.style.display = 'none';
+		categorySelectionArea.style.display = 'block';
+	}
+});
+
+//Event handler for selecting the category
+categorySelectionArea.addEventListener('click', (event) => {
+	event.preventDefault();
+	if (event.target.tagName === 'BUTTON') {
+		if (event.target.dataset.name === 'random') {
+			currentCategory = '';
+		} else {
+			currentCategory = `&category=${event.target.dataset.name}`;
+		}
 		gameStart();
 	}
 });
@@ -118,28 +123,41 @@ answersDisplayArea.addEventListener('click', (event) => {
 newGameButton.addEventListener('click',(event) => {
 	questionIndex = 0;
 	score = 0;
+	currentCategory = '';
 	gameOverDisplayArea.style.display = 'none';
-	gameplayArea.style.display = 'block';
-	answersDisplayArea.style.display = 'block';
-	gameStart();
+	//gameplayArea.style.display = 'block';
+	//answersDisplayArea.style.display = 'block';
+	//gameStart();
+	categorySelectionArea.style.display = 'block';
 })
 
 
 ////////////Functions//////////////
+function openModal() {
+	instructionsModal.style.display = 'block';
+}
+
+function closeModal() {
+	instructionsModal.style.display = 'none';
+}
 
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
 function gameStart() {
 	questionIndex = 0;
 	score = 0;
-	welcomeArea.innerHTML = '';
+	categorySelectionArea.style.display = 'none';
+	gameplayArea.style.display = 'block';
+	answersDisplayArea.style.display = 'block';
 	askQuestionAPI();
 }
+
 
 //Triggers the Game Over Screen once 10 questions have been asked
 function gameOver() {
 	gameplayArea.style.display = 'none';
 	gameOverDisplayArea.style.display = 'block'
 	newGameButton.style.display = 'block';
+
 	finalScore.innerText = `${currentUsername}'s Final Score is ${score}`;
 	if (score < 30) {
 		gameOverMessage.innerText = 'That wasn\'t a great round...keep working at it.'
@@ -151,9 +169,8 @@ function gameOver() {
 }
 
 
+//Function to Decode HTML in from Trivia Database - Source for this code: gomakethings.com/decoding-html-entities-with-vanilla-javascript/
 
-//Function to Decode HTML in from Trivia Database
-//Source for this code: gomakethings.com/decoding-html-entities-with-vanilla-javascript/
 const decodeHTML = function (html) {
 	const txt = document.createElement('textarea');
 	txt.innerHTML = html;
@@ -163,7 +180,6 @@ const decodeHTML = function (html) {
 //////////////API Integration/////////////
 
 //API Variables
-const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
 
 
 //API Functions
@@ -173,7 +189,7 @@ function askQuestionAPI() {
 	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
 
 	if (questionIndex < 5) {
-		fetch(`${url}&difficulty=easy`)
+		fetch(`${url}&difficulty=easy${currentCategory}`)
 			.then((res) => res.json())
 			.then((resJson) => {
 				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
@@ -182,11 +198,9 @@ function askQuestionAPI() {
 				answersDisplayArea.setAttribute('data-correct', resJson.results[0].correct_answer);
 				console.log(answersDisplayArea)
 				answerAssignmentAPI(resJson);
-
-				console.log(resJson)
 			});
 	} else if (questionIndex < 8) {
-		fetch(`${url}&difficulty=medium`)
+		fetch(`${url}&difficulty=medium${currentCategory}`)
 			.then((res) => res.json())
 			.then((resJson) => {
 				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
@@ -196,14 +210,13 @@ function askQuestionAPI() {
 				console.log(resJson);
 			});
 	} else {
-		fetch(`${url}&difficulty=hard`)
+		fetch(`${url}&difficulty=hard${currentCategory}`)
 			.then((res) => res.json())
 			.then((resJson) => {
 				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
 				categoryDisplay.innerText = `${resJson.results[0].category}`;
 				questionTextDisplay.innerText = decodeHTML(resJson.results[0].question);
-				answerAssignmentAPI(resJson);	
-				console.log(resJson);
+				answerAssignmentAPI(resJson);
 			});
 	}
 	
@@ -265,14 +278,12 @@ function answerAssignmentAPI(resJson) {
 	} else {
 		answerButtonD.innerText = decodeHTML(resJson.results[0].incorrect_answers[tempIndex]);
 	}
-	
 }
 
 
-//Grades Answer
+//Grades the answer based on the button selected
 function gradeAnswerAPI(event) {
 	allAnswerButtons.disabled = true;
-	console.log(event.target)
 	if (event.target.dataset.answer === 'correct') {
 		answerMessage.innerText = 'Wow, you are so smart! 🧠 ';
 		event.target.style.backgroundColor = 'DarkSeaGreen';
