@@ -51,7 +51,7 @@ const finalScore = document.getElementById('final-score');
 const gameOverMessage = document.getElementById('game-over-message');
 
 //Database of Random Pub Quiz Names
-//Source: https://www.quizcoconut.co.uk/100-quiz-team-names-ideas, https://www.sportsfeelgoodstories.com/trivia-team-names-for-the-clever/, https://www.findteamnames.com/trivia-team-names/
+//Sources: https://www.quizcoconut.co.uk/100-quiz-team-names-ideas, https://www.sportsfeelgoodstories.com/trivia-team-names-for-the-clever/, https://www.findteamnames.com/trivia-team-names/
 const pubQuizNames = [
 	'I am Smarticus',
 	'Let’s Get Quizzical',
@@ -83,15 +83,12 @@ modalTextbox.style.display = 'none';
 aboutButton.addEventListener('click', openModal);
 closeButton.addEventListener('click', closeModal);
 
-
-
 //Generates a random Pub Quiz Name
 randomNameButton.addEventListener('click', (event) => {
 	event.preventDefault();
 	username.value = pubQuizNames[Math.floor(Math.random()*pubQuizNames.length)]	
 });
 
-console.log(pubQuizNames[Math.floor(Math.random() * pubQuizNames.length)]);
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
 	event.preventDefault();

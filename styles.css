@@ -57,7 +57,7 @@ header {
 #modal-textbox {
     background-color: #1d3557;
 	height: 350px;
-	width: 550px;
+	width: 400px;
     border-radius: 2px;
     margin: 50px auto;
     padding: 2%;
@@ -130,8 +130,8 @@ input[type=button] {
 } 
 
  #question-info {
-  margin: auto;
-  padding: 20px;
+  margin: 10px auto;
+  padding: 5px;
   border: 20px;  
 } 
 
@@ -141,12 +141,16 @@ input[type=button] {
     max-width: 80vw;
 } 
 
-#answer-message{
+#question-number{
+    margin: 2px auto 0 auto;
+    max-width: 80vw;
+}
+
+#answer-message {
     margin: 18px;
     font-size: 25px;
     color: #c2d5db;
 }
-
 
 #game-over {
     text-align: center;
@@ -167,7 +171,7 @@ input[type=button] {
   
 }
 
-@media (min-width: 800px) {
+@media (min-width: 600px) {
     .large-text {
     font-size: 50px;
     }
