@@ -16,13 +16,19 @@ const username = document.getElementById('username-input');
 const letsPlayButton = document.getElementById('lets-play-button');
 const welcomeArea = document.getElementById('welcome-area');
 const categorySelectionArea = document.getElementById('category-section');
-const instructionsButton = document.getElementById('openInstructionsModal');
+
+
+
+
+//Document element selectors for About Game Modal
+const aboutButton = document.getElementById('about-button');
 const instructionsModal = document.getElementById('instructions-modal');
 const closeLink = document.getElementById('close-modal');
-const headerText = document.getElementById('header-text')
+const modalTextbox = document.getElementById('modal-textbox')
 
 
 //Document element selectors Gameplay - Question Div
+const headerText = document.getElementById('header-text');
 const gameplayArea = document.getElementById('gameplay-area');
 const nextButton = document.getElementById('next-button');
 const scoreDisplay = document.getElementById('current-score');
@@ -34,7 +40,7 @@ const questionTextDisplay = document.getElementById('question-text');
 
 //Document element selectors Gameplay - Answers Div
 const answersDisplayArea = document.getElementById('answer-area');
-const answerMessage = document.getElementById('#answer-message');
+const answerMessage = document.getElementById('answer-message');
 const allAnswerButtons = document.querySelectorAll('.answer-button');
 const answerButtonA = document.getElementById('answer-a');
 const answerButtonB = document.getElementById('answer-b');
@@ -54,11 +60,13 @@ gameplayArea.style.display = 'none';
 gameOverDisplayArea.style.display = 'none';
 newGameButton.style.display = 'none';
 categorySelectionArea.style.display = 'none';
-headerText.style.display = 'none'
+headerText.style.display = 'none';
+modalTextbox.style.display = 'none';
+
 
 ////////////Event Handlers//////////////
 
-instructionsButton.addEventListener('click', openModal);
+aboutButton.addEventListener('click', openModal);
 closeLink.addEventListener('click', closeModal)
 
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
@@ -68,13 +76,10 @@ letsPlayButton.addEventListener('click', (event) => {
 	if (currentUsername === '' || currentUsername === username.placeholder) {
 		return alert('You must enter a username to continue!');
 	} else {
-		//gameplayArea.style.display = 'block';
-		//answersDisplayArea.style.display = 'block';
-		//gameStart();
 		welcomeArea.style.display = 'none';
-
+		aboutButton.style.display = 'none';
 		categorySelectionArea.style.display = 'block';
-
+		headerText.style.display = 'block';
 	}
 });
 
@@ -96,13 +101,13 @@ nextButton.addEventListener('click', (event) => {
 	event.preventDefault();
 	answersDisplayArea.setAttribute('data-correct', '');
 	answerButtonA.disabled = false;
-	answerButtonA.style.backgroundColor = 'lightGray';
+	answerButtonA.style.backgroundColor = '#677996';
 	answerButtonB.disabled = false;
-	answerButtonB.style.backgroundColor = 'lightGray';
+	answerButtonB.style.backgroundColor = '#677996';
 	answerButtonC.disabled = false;
-	answerButtonC.style.backgroundColor = 'lightGray';
+	answerButtonC.style.backgroundColor = '#677996';
 	answerButtonD.disabled = false;
-	answerButtonD.style.backgroundColor = 'lightGray';
+	answerButtonD.style.backgroundColor = '#677996';
 	answerMessage.innerText = '';
 
 	questionIndex++;
@@ -131,9 +136,6 @@ newGameButton.addEventListener('click',(event) => {
 	score = 0;
 	currentCategory = '';
 	gameOverDisplayArea.style.display = 'none';
-	//gameplayArea.style.display = 'block';
-	//answersDisplayArea.style.display = 'block';
-	//gameStart();
 	categorySelectionArea.style.display = 'block';
 })
 
@@ -141,10 +143,18 @@ newGameButton.addEventListener('click',(event) => {
 ////////////Functions//////////////
 function openModal() {
 	instructionsModal.style.display = 'block';
+	modalTextbox.style.display = 'block';
+	welcomeArea.style.display = 'none'
+	aboutButton.style.display = 'none';
+
 }
 
 function closeModal() {
 	instructionsModal.style.display = 'none';
+	modalTextbox.style.display = 'none';
+	aboutButton.style.display = 'block';
+	welcomeArea.style.display = 'block';
+
 }
 
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
@@ -183,12 +193,6 @@ const decodeHTML = function (html) {
 	return txt.value;
 };
 
-//////////////API Integration/////////////
-
-//API Variables
-
-
-//API Functions
 function askQuestionAPI() {
 	nextButton.style.display = 'none';
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;

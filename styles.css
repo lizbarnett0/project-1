@@ -2,64 +2,85 @@
 body {
     background-image: url(Images/wood-bar-background.jpg);
     font-family: 'Fjalla One', sans-serif;
-    /* background-color: #1d3557 ; */
+    background-color: #1d3557 ;
     color:#F4F1DE;
     text-align: center;
     margin: auto;
 }
 
 button {
+    background-color: #677996;
     display: block;
     padding: 10px 20px;
-    margin: 10px auto;
+    margin: 8px auto;
     border: 10px;
     border-radius: 5px;
-    width: 50%;     
+    width: 35%;
+    cursor: pointer;  
+    color: white; 
+    font-size: 15px;  
 }
 
+form {
+    margin: 10%;
+}
 
+header {
+    text-align: left;
+    margin-left: 10px;
+    margin-top: 10px;
+
+}
+
+.large-text {
+    font-size: 50px;
+}
+
+.medium-text {
+    font-size: 20px;
+    margin: 2px
+}
 
 /* Modal Styling */
 
 #instructionsModal {
 	background-color: rgba(0,0,0,0.4);
-	position: fixed;
+    position: fixed;
 	top: 0;
 	left: 0;
 	height: 100%;
 	width: 100%;
 	z-index: 1;
-	overflow: auto;
+    overflow: auto;
     display: none;
 }
 
 #modal-textbox {
-    text-align: center;
-	background-color:#1d3557;
-	height: 70vh;
-	width: 80vw;
-	border-radius: 5px;
-	margin: 100px auto;
+    background-color: #1d3557;
+	height: 350px;
+	width: 550px;
+    border-radius: 2px;
+    margin: 50px auto;
+    padding: 2%;
+    line-height: 120%;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-    padding: 10px;
+    display: none;
 }
 
-#openInstructionsModal{
-    display: block;
-    float: right;
+#modal-footer {
+	text-align: center;
+}
+
+.modal-buttons {
     width: fit-content;
-    height: fit-content;
-    padding: 5px;
-    margin: 0px;
-    border: 0px;
+    padding: 8px 32px;
 }
-
-#close-modal {
-    float: right;
-}
-
 
 /* Landing Page */
+#welcome-area {
+    margin: auto;
+    padding: 50px
+}
 
 input[type=text] {
     padding: 5px; 
@@ -69,30 +90,14 @@ input[type=text] {
 }
 
 input[type=button] {
+    background-color: #677996;
     display: block;
-    padding: 5px;
+    padding: 5px 49px;
     margin: 8px auto;
     border: 10px;
     border-radius: 5px;
-}
-
-/* #category-selection {
-    display: none;
-} */
-
-#welcome-area {
-    text-align: center;
-    margin: auto;
-    padding: 20px;
-    max-width: 70vw;
-}
-
-.large-text {
-    font-size: 50px;
-}
-
-.medium-text {
-    font-size: 20px;
+    color: white;
+    cursor: pointer;
 }
 
 /* Gameplay Area */
@@ -104,6 +109,7 @@ input[type=button] {
 
 #current-score{
     text-align: right; 
+    padding-top: 20px;
     margin: auto;
 }
 
@@ -121,16 +127,7 @@ input[type=button] {
 #question-text{
     font-size: 20px;
     margin: 25px auto 0 auto;
-}
-
-#question-number{
-    font-size: 30px;
-    margin-bottom: 30px;
-}
-
-#category {
-    margin: 7px;
-}
+} 
 
 #answer-message{
     margin: 18px;
@@ -150,15 +147,11 @@ input[type=button] {
 
 #final-score {
     margin: 30px;
-
 }
 
 
-/* 
+
 @media (min-width: 800px) {
     
-    .welcome-area {
-        height: 100%;
-        width: 75%;
-	}
-} */
+    
+}

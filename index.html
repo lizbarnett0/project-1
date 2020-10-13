@@ -10,21 +10,23 @@
 	</head>
 	<body>
 		<header>
-		<p id="header-text">&#127866; The Socially Distant Pub Quiz</p> 
-		<button id="openInstructionsModal">About the Game</button>
+		<span class="medium-text" id="header-text">&#127866; The Socially Distant Pub Quiz</span> 
+		<span class="medium-text" id="current-score"></span>
 		</header>
 		<main>
 			
 			<section id="instructions-modal">
 				<div id="modal-textbox">
-					<a id="close-modal" href="#">Close</a>
 					<h3>Instructions</h3>
 					<p>Choose a team name. Just like real-life pub quizzes, the punnier the name, the better! There will be 10 questions ranging in difficulty and category. All questions are multiple choice. There are 5 easy questions, 3 medium questions, and 2 hard questions.Enter your team name in the box below and click submit when ready to start. </p>
 					<h3>Scoring</h3>
 					<p>&#128994; EASY questions are worth 5 points<br>
 					&#128993; MEDIUM questions are worth 10 points<br>
 					&#128308; HARD questions are worth 20 points</p>
-					<p>There are 5 easy questions, 3 medium questions, and 2 hard questions.</p>
+					<p>There are 5 easy questions, 3 medium questions, and 2 hard questions per round.</p>
+					<div id="modal-footer">
+						<button class="modal-buttons" id="close-modal" href="#">Close</button>
+					</div>
 				</div>
 			</section>
 
@@ -32,17 +34,20 @@
 				<div class="medium-text">WELCOME TO</div>	
 				<div class="large-text">The Socially Distant <br>&#127866; PUB QUIZ &#127866;</div>
 				<p class="medium-text">Are you feeling down because you can’t go to your local watering hole with your pals to play trivia? <br>
-				Don’t worry! We have the next best thing...The Socially Distant Pub Quiz! Test your knowledge of random facts and useless information right from the comfort of your home!
+				Don’t worry! We have the next best thing...<br>The Socially Distant Pub Quiz! <br>Test your knowledge of random facts and useless information right from the comfort of your home!
 				</p>
+				<button class="modal-buttons" id="about-button">About the Game</button>
 				<div class="form">
 					<form id="usernameForm">
 						<input id="username-input" type="text" placeholder="Enter Name Here">
 						<input id="lets-play-button" type="button" value="Let's Play!">
 					</form>
+					
 				</div>
 			</section>
 
 			<section id="category-section">
+				<div class="large-text">Choose a category!</div>
 				<div id="category-buttons">
 					<button data-name="random">Random</button>
 					<button data-name="9">General Knowledge</button>
@@ -56,25 +61,25 @@
 			</section>
 
 			<section id = "gameplay-area">
-				<div id="current-score"></div>
-				<div id="question-info"></div>
-				<div id="question-number"></div>
-				<div id="category"></div>
-				<div id="difficulty-level"></div>
-				<div id="question-text"></div>
+				
+				<div class="medium-text" id="question-info"></div>
+				<div class="large-text" id="question-number"></div>
+				<div class="medium-text" id="category"></div>
+				<div class="medium-text" id="difficulty-level"></div>
+				<div class="medium-text" id="question-text"></div>
 				<div id="answer-area">
 					<button class="answer-button" id="answer-a" ></button>
 					<button class="answer-button" id="answer-b"></button>
 					<button class="answer-button" id="answer-c"></button>	
 					<button class="answer-button" id="answer-d"></button>
-				<div id="answer-message"></div>
+				<div class="medium-text" id="answer-message"></div>
 			</div>
 				<button id="next-button">Next</button>
 			</section>
 		
 			<section id="game-over">
-				<div id="final-score"></div>
-				<div id="game-over-message"></div>
+				<div class="large-text" id="final-score"></div>
+				<div class="medium-text" id="game-over-message"></div>
 				<button id="new-game-button">New Game</button>
 				</section>
 		</main>
