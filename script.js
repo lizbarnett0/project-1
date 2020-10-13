@@ -2,28 +2,26 @@
 
 //Scoring, tracking, and other game-wide variables
 let score = 0;
-const hard = 20;
-const medium = 10;
-const easy = 5;
 let questionIndex = 0;
 let currentUsername = '';
 let currentCategory = '';
+const hard = 20;
+const medium = 10;
+const easy = 5;
 const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
-
 
 //Document element selectors on the landing page
 const welcomeArea = document.getElementById('welcome-area');
 const username = document.getElementById('username-input');
 const letsPlayButton = document.getElementById('lets-play-button');
 
-
 //Document element selectors for 'About The Game' Modal
 const aboutButton = document.getElementById('about-button');
 const instructionsModal = document.getElementById('instructions-modal');
 const closeButton = document.getElementById('close-modal');
-const modalTextbox = document.getElementById('modal-textbox')
+const modalTextbox = document.getElementById('modal-textbox');
 
-//Document element selectors for About Game Modal
+//Document element selectors for category selection
 const categorySelectionArea = document.getElementById('category-section');
 const categoryDisplay = document.getElementById('category');
 const headerText = document.getElementById('header-text');
@@ -53,20 +51,19 @@ const gameOverMessage = document.getElementById('game-over-message');
 
 //////////Initial Game State///////////////
 nextButton.style.display = 'none';
-answersDisplayArea.style.display = 'none'
 gameplayArea.style.display = 'none';
+answersDisplayArea.style.display = 'none';
 gameOverDisplayArea.style.display = 'none';
 newGameButton.style.display = 'none';
 categorySelectionArea.style.display = 'none';
 headerText.style.display = 'none';
 modalTextbox.style.display = 'none';
 
-
 ////////////Event Handlers//////////////
 
 //Event handlers to open and close the modal
 aboutButton.addEventListener('click', openModal);
-closeButton.addEventListener('click', closeModal)
+closeButton.addEventListener('click', closeModal);
 
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
@@ -110,7 +107,7 @@ nextButton.addEventListener('click', (event) => {
 	answerMessage.innerText = '';
 
 	questionIndex++;
-	if (questionIndex < 1) {
+	if (questionIndex < 10) {
 		askQuestionAPI();
 	} else {
 		gameOverDisplayArea.style.display = 'block';
@@ -130,23 +127,26 @@ answersDisplayArea.addEventListener('click', (event) => {
 	}
 });
 
-newGameButton.addEventListener('click',(event) => {
+// Restarts the game for the same user
+newGameButton.addEventListener('click', (event) => {
 	questionIndex = 0;
 	score = 0;
 	currentCategory = '';
 	gameOverDisplayArea.style.display = 'none';
 	categorySelectionArea.style.display = 'block';
-})
-
+});
 
 ////////////Functions//////////////
+
+//Opens the about the game modal
 function openModal() {
 	instructionsModal.style.display = 'block';
 	modalTextbox.style.display = 'block';
-	welcomeArea.style.display = 'none'
+	welcomeArea.style.display = 'none';
 	aboutButton.style.display = 'none';
 }
 
+//Closes the about the game modal
 function closeModal() {
 	instructionsModal.style.display = 'none';
 	modalTextbox.style.display = 'none';
@@ -167,8 +167,11 @@ function gameStart() {
 //Triggers the Game Over Screen once 10 questions have been asked
 function gameOver() {
 	gameplayArea.style.display = 'none';
-	gameOverDisplayArea.style.display = 'block'
+	scoreDisplay.style.display = 'none';
+	gameOverDisplayArea.style.display = 'block';
 	newGameButton.style.display = 'block';
+	finalScore.style.display = 'block';
+	finalScore.innerText = `${currentUsername}'s Score: ${score}`;
 
 	if (score < 30) {
 		gameOverMessage.innerText =
@@ -181,14 +184,14 @@ function gameOver() {
 	}
 }
 
-
 //Function to Decode HTML in from Trivia Database - Source for this code: gomakethings.com/decoding-html-entities-with-vanilla-javascript/
-const decodeHTML = function (html) {
+function decodeHTML(html) {
 	const txt = document.createElement('textarea');
 	txt.innerHTML = html;
 	return txt.value;
-};
+}
 
+//Uses an API to populate question data based on difficulty and category selected
 function askQuestionAPI() {
 	nextButton.style.display = 'none';
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
@@ -201,8 +204,10 @@ function askQuestionAPI() {
 				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
 				categoryDisplay.innerText = `${resJson.results[0].category}`;
 				questionTextDisplay.innerText = decodeHTML(resJson.results[0].question);
-				answersDisplayArea.setAttribute('data-correct', resJson.results[0].correct_answer);
-				console.log(answersDisplayArea)
+				answersDisplayArea.setAttribute(
+					'data-correct',
+					resJson.results[0].correct_answer
+				);
 				answerAssignmentAPI(resJson);
 			});
 	} else if (questionIndex < 8) {
@@ -213,7 +218,6 @@ function askQuestionAPI() {
 				categoryDisplay.innerText = `${resJson.results[0].category}`;
 				questionTextDisplay.innerText = decodeHTML(resJson.results[0].question);
 				answerAssignmentAPI(resJson);
-				console.log(resJson);
 			});
 	} else {
 		fetch(`${url}&difficulty=hard${currentCategory}`)
@@ -225,7 +229,6 @@ function askQuestionAPI() {
 				answerAssignmentAPI(resJson);
 			});
 	}
-	
 }
 
 //Assign answers from API question
@@ -235,33 +238,41 @@ function answerAssignmentAPI(resJson) {
 	let arrStartIndex2;
 	let arrStartIndex3;
 	let tempIndex;
-	answersDisplayArea.setAttribute('data-correct',resJson.results[0].correct_answer);
-	answerButtonA.setAttribute('data-answer','')
+	answersDisplayArea.setAttribute(
+		'data-correct',
+		resJson.results[0].correct_answer
+	);
+	answerButtonA.setAttribute('data-answer', '');
 	answerButtonB.setAttribute('data-answer', '');
-	answerButtonC.setAttribute('data-answer','')
+	answerButtonC.setAttribute('data-answer', '');
 	answerButtonD.setAttribute('data-answer', '');
 
+	
+	//Allows answers to be randomized in the buttons so that the correct answer isn't always button A for example
 	arrStartIndex1 = Math.floor(Math.random() * answersArrIndex.length);
 	tempIndex = answersArrIndex[arrStartIndex1];
-	
 
 	if (tempIndex === 3) {
 		answerButtonA.innerText = decodeHTML(resJson.results[0].correct_answer);
-		answerButtonA.setAttribute('data-answer','correct')
+		answerButtonA.setAttribute('data-answer', 'correct');
 	} else {
-		answerButtonA.innerText = decodeHTML(resJson.results[0].incorrect_answers[tempIndex]);
+		answerButtonA.innerText = decodeHTML(
+			resJson.results[0].incorrect_answers[tempIndex]
+		);
 		answerButtonA.setAttribute('data-answer', 'incorrect');
 	}
 	answersArrIndex.splice(arrStartIndex1, 1);
 
 	arrStartIndex2 = Math.floor(Math.random() * answersArrIndex.length);
 	tempIndex = answersArrIndex[arrStartIndex2];
-	
+
 	if (tempIndex === 3) {
 		answerButtonB.innerText = decodeHTML(resJson.results[0].correct_answer);
 		answerButtonB.setAttribute('data-answer', 'correct');
 	} else {
-		answerButtonB.innerText = decodeHTML(resJson.results[0].incorrect_answers[tempIndex]);
+		answerButtonB.innerText = decodeHTML(
+			resJson.results[0].incorrect_answers[tempIndex]
+		);
 		answerButtonB.setAttribute('data-answer', 'incorrect');
 	}
 	answersArrIndex.splice(arrStartIndex2, 1);
@@ -272,7 +283,9 @@ function answerAssignmentAPI(resJson) {
 		answerButtonC.innerText = decodeHTML(resJson.results[0].correct_answer);
 		answerButtonC.setAttribute('data-answer', 'correct');
 	} else {
-		answerButtonC.innerText = decodeHTML(resJson.results[0].incorrect_answers[tempIndex]);
+		answerButtonC.innerText = decodeHTML(
+			resJson.results[0].incorrect_answers[tempIndex]
+		);
 		answerButtonC.setAttribute('data-answer', 'incorrect');
 	}
 	answersArrIndex.splice(arrStartIndex3, 1);
@@ -282,10 +295,11 @@ function answerAssignmentAPI(resJson) {
 		answerButtonD.innerText = decodeHTML(resJson.results[0].correct_answer);
 		answerButtonD.setAttribute('data-answer', 'correct');
 	} else {
-		answerButtonD.innerText = decodeHTML(resJson.results[0].incorrect_answers[tempIndex]);
+		answerButtonD.innerText = decodeHTML(
+			resJson.results[0].incorrect_answers[tempIndex]
+		);
 	}
 }
-
 
 //Grades the answer based on the button selected
 function gradeAnswerAPI(event) {
@@ -303,7 +317,7 @@ function gradeAnswerAPI(event) {
 		}
 	} else {
 		event.target.style.backgroundColor = 'PaleVioletRed';
-		answerMessage.innerText = `NOPE!  The correct answer is: ${answersDisplayArea.dataset.correct} \nYou should really study some more! 📚 `
+		answerMessage.innerText = `NOPE!  The correct answer is: ${answersDisplayArea.dataset.correct} \nYou should really study some more! 📚 `;
 	}
 	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
 	nextButton.style.display = 'inline';
