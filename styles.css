@@ -71,7 +71,7 @@ header {
 }
 
 .modal-buttons {
-    width: fit-content;
+    width: 200px;
     padding: 8px 32px;
 }
 
@@ -79,6 +79,16 @@ header {
 #welcome-area {
     margin: auto;
     padding: 50px
+}
+
+#random-button{
+    padding: 5px 0px;
+    margin: 8px auto;
+    border: 10px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    width: 200px;
 }
 
 input[type=text] {
@@ -98,6 +108,7 @@ input[type=button] {
     border-radius: 5px;
     color: white;
     cursor: pointer;
+    width: 200px
 }
 
 /* Gameplay Area */

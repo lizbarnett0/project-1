@@ -14,6 +14,7 @@ const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
 const welcomeArea = document.getElementById('welcome-area');
 const username = document.getElementById('username-input');
 const letsPlayButton = document.getElementById('lets-play-button');
+const randomNameButton = document.getElementById('random-button')
 
 //Document element selectors for 'About The Game' Modal
 const aboutButton = document.getElementById('about-button');
@@ -49,6 +50,23 @@ const newGameButton = document.getElementById('new-game-button');
 const finalScore = document.getElementById('final-score');
 const gameOverMessage = document.getElementById('game-over-message');
 
+//Database of Random Pub Quiz Names
+//Source: https://www.quizcoconut.co.uk/100-quiz-team-names-ideas, https://www.sportsfeelgoodstories.com/trivia-team-names-for-the-clever/, https://www.findteamnames.com/trivia-team-names/
+const pubQuizNames = [
+	'I am Smarticus',
+	'Let’s Get Quizzical',
+	'Quizzy McQuizface',
+	'The Quizard of Oz',
+	'Quizteama Aguilera',
+	'John Trivia-olta',
+	'Red Hot Trivia Peppers',
+	'You’re a Quizard, Harry',
+	'The Trivia Pursuits',
+	'Les Quizerables',
+	'Quizzly Bears',
+	'Risky Quizness',
+];
+
 //////////Initial Game State///////////////
 nextButton.style.display = 'none';
 gameplayArea.style.display = 'none';
@@ -65,6 +83,15 @@ modalTextbox.style.display = 'none';
 aboutButton.addEventListener('click', openModal);
 closeButton.addEventListener('click', closeModal);
 
+
+
+//Generates a random Pub Quiz Name
+randomNameButton.addEventListener('click', (event) => {
+	event.preventDefault();
+	username.value = pubQuizNames[Math.floor(Math.random()*pubQuizNames.length)]	
+});
+
+console.log(pubQuizNames[Math.floor(Math.random() * pubQuizNames.length)]);
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
 	event.preventDefault();
