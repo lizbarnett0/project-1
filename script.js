@@ -7,42 +7,45 @@ const medium = 10;
 const easy = 5;
 let questionIndex = 0;
 let currentUsername = '';
-const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
 let currentCategory = '';
+const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
+
 
 //Document element selectors Welcome Area Section
 const username = document.getElementById('username-input');
-const letsPlayButton = document.querySelector('#lets-play-button');
-const welcomeArea = document.querySelector('.welcome-area');
-const categorySelectionArea = document.querySelector('#category-section')
+const letsPlayButton = document.getElementById('lets-play-button');
+const welcomeArea = document.getElementById('welcome-area');
+const categorySelectionArea = document.getElementById('category-section');
 const instructionsButton = document.getElementById('openInstructionsModal');
-const instructionsModal = document.getElementById('instructionsModal');
-const close = document.getElementById('close');
+const instructionsModal = document.getElementById('instructions-modal');
+const closeLink = document.getElementById('close-modal');
+const headerText = document.getElementById('header-text')
+
 
 //Document element selectors Gameplay - Question Div
-const gameplayArea = document.querySelector('.gameplay-area');
-const nextButton = document.querySelector('#next-button');
-const scoreDisplay = document.querySelector('#current-score');
-const questionNumDisplay = document.querySelector('#question-number');
-const difficultyDisplay = document.querySelector('#difficulty-level');
-const pointValueDisplay = document.querySelector('#point-value');
-const categoryDisplay = document.querySelector('#category');
-const questionTextDisplay = document.querySelector('#question-text');
+const gameplayArea = document.getElementById('gameplay-area');
+const nextButton = document.getElementById('next-button');
+const scoreDisplay = document.getElementById('current-score');
+const questionNumDisplay = document.getElementById('question-number');
+const difficultyDisplay = document.getElementById('difficulty-level');
+const pointValueDisplay = document.getElementById('point-value');
+const categoryDisplay = document.getElementById('category');
+const questionTextDisplay = document.getElementById('question-text');
 
 //Document element selectors Gameplay - Answers Div
-const answersDisplayArea = document.querySelector('.answer-area');
-const answerMessage = document.querySelector('#answer-message');
+const answersDisplayArea = document.getElementById('answer-area');
+const answerMessage = document.getElementById('#answer-message');
 const allAnswerButtons = document.querySelectorAll('.answer-button');
-const answerButtonA = document.querySelector('#answer-a');
-const answerButtonB = document.querySelector('#answer-b');
-const answerButtonC = document.querySelector('#answer-c');
-const answerButtonD = document.querySelector('#answer-d');
+const answerButtonA = document.getElementById('answer-a');
+const answerButtonB = document.getElementById('answer-b');
+const answerButtonC = document.getElementById('answer-c');
+const answerButtonD = document.getElementById('answer-d');
 
 //Document element selectors game-over
-const gameOverDisplayArea = document.querySelector('.game-over')
-const newGameButton = document.querySelector('#new-game-button')
-const finalScore = document.querySelector('#final-score')
-const gameOverMessage = document.querySelector("#game-over-message")
+const gameOverDisplayArea = document.getElementById('game-over');
+const newGameButton = document.getElementById('new-game-button');
+const finalScore = document.getElementById('final-score');
+const gameOverMessage = document.getElementById('game-over-message');
 
 //////////Initial Game State///////////////
 nextButton.style.display = 'none';
@@ -50,12 +53,13 @@ answersDisplayArea.style.display = 'none'
 gameplayArea.style.display = 'none';
 gameOverDisplayArea.style.display = 'none';
 newGameButton.style.display = 'none';
-categorySelectionArea.style.display = 'none'
+categorySelectionArea.style.display = 'none';
+headerText.style.display = 'none'
 
 ////////////Event Handlers//////////////
 
 instructionsButton.addEventListener('click', openModal);
-close.addEventListener('click', closeModal)
+closeLink.addEventListener('click', closeModal)
 
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
@@ -68,7 +72,9 @@ letsPlayButton.addEventListener('click', (event) => {
 		//answersDisplayArea.style.display = 'block';
 		//gameStart();
 		welcomeArea.style.display = 'none';
+
 		categorySelectionArea.style.display = 'block';
+
 	}
 });
 
