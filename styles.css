@@ -15,29 +15,28 @@ button {
     margin: 8px auto;
     border: 10px;
     border-radius: 5px;
-    width: 35%;
+    width: 30%;
     cursor: pointer;  
     color: white; 
-    font-size: 15px;  
+    font-size: 15px; 
 }
 
 form {
-    margin: 10%;
+    margin: 6%;
 }
 
 header {
     text-align: left;
     margin-left: 10px;
     margin-top: 10px;
-
 }
 
 .large-text {
-    font-size: 50px;
+    font-size: 40px;
 }
 
 .medium-text {
-    font-size: 20px;
+    font-size: 15px;
     margin: 2px
 }
 
@@ -87,6 +86,7 @@ input[type=text] {
     border: 2px solid #ccc; 
     border-radius: 5px;
     text-align: center;
+    margin-top: 10px;
 }
 
 input[type=button] {
@@ -127,6 +127,7 @@ input[type=button] {
 #question-text{
     font-size: 20px;
     margin: 25px auto 0 auto;
+    max-width: 80vw;
 } 
 
 #answer-message{
@@ -140,9 +141,9 @@ input[type=button] {
     text-align: center;
     margin: auto;
     max-width: 80vw;
-    font-size: 50px;
     vertical-align: middle;
     display: none;
+    align-content: center;
 }
 
 #final-score {
@@ -150,8 +151,19 @@ input[type=button] {
 }
 
 
+#new-game-button {
+    margin: 10% auto;
+  
+}
 
 @media (min-width: 800px) {
+    .large-text {
+    font-size: 50px;
+    }
+
+.medium-text {
+    font-size: 20px;
     
+}
     
 }

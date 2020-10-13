@@ -11,37 +11,35 @@ let currentCategory = '';
 const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
 
 
-//Document element selectors Welcome Area Section
+//Document element selectors on the landing page
+const welcomeArea = document.getElementById('welcome-area');
 const username = document.getElementById('username-input');
 const letsPlayButton = document.getElementById('lets-play-button');
-const welcomeArea = document.getElementById('welcome-area');
-const categorySelectionArea = document.getElementById('category-section');
 
 
-
-
-//Document element selectors for About Game Modal
+//Document element selectors for 'About The Game' Modal
 const aboutButton = document.getElementById('about-button');
 const instructionsModal = document.getElementById('instructions-modal');
-const closeLink = document.getElementById('close-modal');
+const closeButton = document.getElementById('close-modal');
 const modalTextbox = document.getElementById('modal-textbox')
 
+//Document element selectors for About Game Modal
+const categorySelectionArea = document.getElementById('category-section');
+const categoryDisplay = document.getElementById('category');
+const headerText = document.getElementById('header-text');
 
 //Document element selectors Gameplay - Question Div
-const headerText = document.getElementById('header-text');
 const gameplayArea = document.getElementById('gameplay-area');
 const nextButton = document.getElementById('next-button');
 const scoreDisplay = document.getElementById('current-score');
 const questionNumDisplay = document.getElementById('question-number');
 const difficultyDisplay = document.getElementById('difficulty-level');
 const pointValueDisplay = document.getElementById('point-value');
-const categoryDisplay = document.getElementById('category');
 const questionTextDisplay = document.getElementById('question-text');
 
 //Document element selectors Gameplay - Answers Div
 const answersDisplayArea = document.getElementById('answer-area');
 const answerMessage = document.getElementById('answer-message');
-const allAnswerButtons = document.querySelectorAll('.answer-button');
 const answerButtonA = document.getElementById('answer-a');
 const answerButtonB = document.getElementById('answer-b');
 const answerButtonC = document.getElementById('answer-c');
@@ -66,8 +64,9 @@ modalTextbox.style.display = 'none';
 
 ////////////Event Handlers//////////////
 
+//Event handlers to open and close the modal
 aboutButton.addEventListener('click', openModal);
-closeLink.addEventListener('click', closeModal)
+closeButton.addEventListener('click', closeModal)
 
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
@@ -111,10 +110,10 @@ nextButton.addEventListener('click', (event) => {
 	answerMessage.innerText = '';
 
 	questionIndex++;
-	if (questionIndex < 10) {
+	if (questionIndex < 1) {
 		askQuestionAPI();
 	} else {
-		gameOverDisplayArea.style.display = 'inline';
+		gameOverDisplayArea.style.display = 'block';
 		gameOver();
 	}
 });
@@ -146,7 +145,6 @@ function openModal() {
 	modalTextbox.style.display = 'block';
 	welcomeArea.style.display = 'none'
 	aboutButton.style.display = 'none';
-
 }
 
 function closeModal() {
@@ -154,7 +152,6 @@ function closeModal() {
 	modalTextbox.style.display = 'none';
 	aboutButton.style.display = 'block';
 	welcomeArea.style.display = 'block';
-
 }
 
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
@@ -167,26 +164,25 @@ function gameStart() {
 	askQuestionAPI();
 }
 
-
 //Triggers the Game Over Screen once 10 questions have been asked
 function gameOver() {
 	gameplayArea.style.display = 'none';
 	gameOverDisplayArea.style.display = 'block'
 	newGameButton.style.display = 'block';
 
-	finalScore.innerText = `${currentUsername}'s Final Score is ${score}`;
 	if (score < 30) {
-		gameOverMessage.innerText = 'That wasn\'t a great round...keep working at it.'
+		gameOverMessage.innerText =
+			"That wasn't a great round 😩 ...keep working at it.";
 	} else if (score < 70) {
-		gameOverMessage.innerText = 'Pretty good work, keep it up!';
+		gameOverMessage.innerText = 'Pretty good work, keep it up! 👍';
 	} else {
-		gameOverMessage.innerText = 'Look at the big brain on you! \nGenius Level. \nGreat job!';
+		gameOverMessage.innerText =
+			' WOAH! Look at the big brain on you! 🧠 \nGenius Level 🤩. \nGreat job!';
 	}
 }
 
 
 //Function to Decode HTML in from Trivia Database - Source for this code: gomakethings.com/decoding-html-entities-with-vanilla-javascript/
-
 const decodeHTML = function (html) {
 	const txt = document.createElement('textarea');
 	txt.innerHTML = html;
@@ -293,7 +289,6 @@ function answerAssignmentAPI(resJson) {
 
 //Grades the answer based on the button selected
 function gradeAnswerAPI(event) {
-	allAnswerButtons.disabled = true;
 	if (event.target.dataset.answer === 'correct') {
 		answerMessage.innerText = 'Wow, you are so smart! 🧠 ';
 		event.target.style.backgroundColor = 'DarkSeaGreen';
