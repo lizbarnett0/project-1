@@ -14,7 +14,7 @@ const url = `https://opentdb.com/api.php?amount=1&type=multiple`;
 const welcomeArea = document.getElementById('welcome-area');
 const username = document.getElementById('username-input');
 const letsPlayButton = document.getElementById('lets-play-button');
-const randomNameButton = document.getElementById('random-button')
+const randomNameButton = document.getElementById('random-button');
 
 //Document element selectors for 'About The Game' Modal
 const aboutButton = document.getElementById('about-button');
@@ -86,7 +86,8 @@ closeButton.addEventListener('click', closeModal);
 //Generates a random Pub Quiz Name
 randomNameButton.addEventListener('click', (event) => {
 	event.preventDefault();
-	username.value = pubQuizNames[Math.floor(Math.random()*pubQuizNames.length)]	
+	username.value =
+		pubQuizNames[Math.floor(Math.random() * pubQuizNames.length)];
 });
 
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
@@ -271,7 +272,6 @@ function answerAssignmentAPI(resJson) {
 	answerButtonC.setAttribute('data-answer', '');
 	answerButtonD.setAttribute('data-answer', '');
 
-	
 	//Allows answers to be randomized in the buttons so that the correct answer isn't always button A for example
 	arrStartIndex1 = Math.floor(Math.random() * answersArrIndex.length);
 	tempIndex = answersArrIndex[arrStartIndex1];
@@ -341,7 +341,9 @@ function gradeAnswerAPI(event) {
 		}
 	} else {
 		event.target.style.backgroundColor = 'PaleVioletRed';
-		answerMessage.innerText = `NOPE!  The correct answer is: ${answersDisplayArea.dataset.correct} \nYou should really study some more! 📚 `;
+		answerMessage.innerText = `NOPE!  The correct answer is: ${decodeHTML(
+			answersDisplayArea.dataset.correct
+		)} \nYou should really study some more! 📚 `;
 	}
 	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
 	nextButton.style.display = 'inline';
