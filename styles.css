@@ -1,69 +1,78 @@
 /* General Website Settings */
 body {
-    background-image: url(Images/wood-bar-background.jpg);
-    font-family: 'Fjalla One', sans-serif;
-    background-color: #1d3557 ;
-    color:#F4F1DE;
-    text-align: center;
-    margin: auto;
+	background-image: url(Images/wood-bar-background.jpg);
+	font-family: 'Fjalla One', sans-serif;
+	background-color: #1d3557;
+	color: #f4f1de;
+	text-align: center;
+	margin: auto;
 }
 
 button {
-    background-color: #677996;
-    display: block;
-    padding: 10px 20px;
-    margin: 8px auto;
-    border: 10px;
-    border-radius: 5px;
-    width: 30%;
-    cursor: pointer;  
-    color: white; 
-    font-size: 15px; 
+	background-color: #677996;
+	display: block;
+	padding: 10px 20px;
+	margin: 8px auto;
+	border: 10px;
+	border-radius: 5px;
+	width: 30%;
+	cursor: pointer;
+	color: white;
+	font-size: 15px;
+	height: 35px;
 }
 
 form {
-    margin: 6%;
+	margin: 6%;
 }
 
 header {
-    text-align: left;
-    margin-left: 10px;
-    margin-top: 10px;
+	display: flex;
+	justify-content: space-between;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.header-instructions {
+	text-align: right;
+    padding: 0;
+    font-size:15px;
 }
 
 .large-text {
-    font-size: 40px;
+	font-size: 40px;
 }
 
 .medium-text {
-    font-size: 15px;
-    margin: 2px
+	font-size: 15px;
+	margin: 5px 25px;
+	text-align: center;
 }
 
 /* Modal Styling */
 
 #instructionsModal {
-	background-color: rgba(0,0,0,0.4);
-    position: fixed;
+	background-color: rgba(0, 0, 0, 0.4);
+	position: fixed;
 	top: 0;
 	left: 0;
 	height: 100%;
 	width: 100%;
 	z-index: 1;
-    overflow: auto;
-    display: none;
+	overflow: auto;
+	display: none;
 }
 
 #modal-textbox {
-    background-color: #1d3557;
+	background-color: #1d3557;
 	height: 350px;
 	width: 400px;
-    border-radius: 2px;
-    margin: 50px auto;
-    padding: 2%;
-    line-height: 120%;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-    display: none;
+	border-radius: 2px;
+	margin: 50px auto;
+	padding: 2%;
+	line-height: 120%;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+	display: none;
 }
 
 #modal-footer {
@@ -71,114 +80,117 @@ header {
 }
 
 .modal-buttons {
-    width: 200px;
-    padding: 8px 32px;
+	width: 200px;
+	padding: 8px 32px;
+	height: 35px;
 }
 
 /* Landing Page */
 #welcome-area {
-    margin: auto;
-    padding: 50px
+	margin: 0px auto;
+	padding: 0px 50px;
+	max-width: 700px;
 }
 
-#random-button{
-    padding: 5px 0px;
-    margin: 8px auto;
-    border: 10px;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    width: 200px;
+#random-button {
+	padding: 5px 0px;
+	margin: 8px auto;
+	border: 10px;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	width: 200px;
+	height: 35px;
 }
 
-input[type=text] {
-    padding: 5px; 
-    border: 2px solid #ccc; 
-    border-radius: 5px;
-    text-align: center;
-    margin-top: 10px;
+input[type='text'] {
+	padding: 5px;
+	border: 2px solid #ccc;
+	border-radius: 5px;
+	text-align: center;
+	margin-top: 10px;
+	width: 188px;
 }
 
-input[type=button] {
-    background-color: #677996;
-    display: block;
-    padding: 5px 49px;
-    margin: 8px auto;
-    border: 10px;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    width: 200px
+input[type='button'] {
+	background-color: #677996;
+	display: block;
+	padding: 5px 49px;
+	margin: 8px auto;
+	border: 10px;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	width: 200px;
+	height: 35px;
+	font-size: 15px;
 }
 
 /* Gameplay Area */
 .gameplay-area {
-    text-align: center;
-    margin: auto;
-    max-width: 80vw;
+	text-align: center;
+	margin: auto;
+	max-width: 80vw;
 }
 
-#current-score{
-    text-align: right; 
-    padding-top: 20px;
-    margin: auto;
+#current-score {
+	text-align: right;
+	padding-top: 20px;
+	/* margin: auto; */
 }
 
 #answer-area {
-    align-items: center;
-    margin: auto;
-} 
+	align-items: center;
+	margin: auto;
+}
 
- #question-info {
-  margin: 10px auto;
-  padding: 5px;
-  border: 20px;  
-} 
+#question-info {
+	margin: 10px auto;
+	padding: 5px;
+	border: 20px;
+}
 
-#question-text{
-    font-size: 20px;
-    margin: 25px auto 0 auto;
-    max-width: 80vw;
-} 
+#question-text {
+	font-size: 20px;
+	margin: 25px auto 0 auto;
+	max-width: 80vw;
+}
 
-#question-number{
-    margin: 2px auto 0 auto;
-    max-width: 80vw;
+#question-number {
+	margin: 2px auto 0 auto;
+	max-width: 80vw;
 }
 
 #answer-message {
-    margin: 18px;
-    font-size: 25px;
-    color: #c2d5db;
+	margin: 18px;
+	font-size: 25px;
+	color: #c2d5db;
 }
 
 #game-over {
-    text-align: center;
-    margin: auto;
-    max-width: 80vw;
-    vertical-align: middle;
-    display: none;
-    align-content: center;
+	text-align: center;
+	margin: auto;
+	max-width: 80vw;
+	vertical-align: middle;
+	display: none;
+	align-content: center;
 }
 
 #final-score {
-    margin: 30px;
+	margin: 30px;
 }
 
-
 #new-game-button {
-    margin: 10% auto;
-  
+	margin: 10% auto;
+	height: 35px;
 }
 
 @media (min-width: 600px) {
-    .large-text {
-    font-size: 50px;
-    }
+	.large-text {
+		font-size: 50px;
+	}
 
-.medium-text {
-    font-size: 20px;
-    
-}
-    
+	.medium-text {
+		font-size: 20px;
+	}
 }

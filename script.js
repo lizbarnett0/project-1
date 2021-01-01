@@ -15,9 +15,9 @@ const welcomeArea = document.getElementById('welcome-area');
 const username = document.getElementById('username-input');
 const letsPlayButton = document.getElementById('lets-play-button');
 const randomNameButton = document.getElementById('random-button');
+const instructionsButton = document.getElementById('header-instructions');
 
 //Document element selectors for 'About The Game' Modal
-const aboutButton = document.getElementById('about-button');
 const instructionsModal = document.getElementById('instructions-modal');
 const closeButton = document.getElementById('close-modal');
 const modalTextbox = document.getElementById('modal-textbox');
@@ -76,11 +76,12 @@ newGameButton.style.display = 'none';
 categorySelectionArea.style.display = 'none';
 headerText.style.display = 'none';
 modalTextbox.style.display = 'none';
+sessionStorage.setItem('playing', 'welcome');
 
 ////////////Event Handlers//////////////
 
 //Event handlers to open and close the modal
-aboutButton.addEventListener('click', openModal);
+instructionsButton.addEventListener('click', openModal);
 closeButton.addEventListener('click', closeModal);
 
 //Generates a random Pub Quiz Name
@@ -93,12 +94,12 @@ randomNameButton.addEventListener('click', (event) => {
 //Event handler for the Let's Play button that is click after entering a name.  It stores the username, then triggers the begining of the game.
 letsPlayButton.addEventListener('click', (event) => {
 	event.preventDefault();
+	sessionStorage.setItem('playing', 'category');
 	currentUsername = username.value;
 	if (currentUsername === '' || currentUsername === username.placeholder) {
 		return alert('You must enter a username to continue!');
 	} else {
 		welcomeArea.style.display = 'none';
-		aboutButton.style.display = 'none';
 		categorySelectionArea.style.display = 'block';
 		headerText.style.display = 'block';
 	}
@@ -168,15 +169,29 @@ function openModal() {
 	instructionsModal.style.display = 'block';
 	modalTextbox.style.display = 'block';
 	welcomeArea.style.display = 'none';
-	aboutButton.style.display = 'none';
+	instructionsButton.style.display = 'none';
+	gameplayArea.style.display = 'none';
+	categorySelectionArea.style.display = 'none';
+	gameOverDisplayArea.style.display = 'none';
 }
 
 //Closes the about the game modal
 function closeModal() {
 	instructionsModal.style.display = 'none';
 	modalTextbox.style.display = 'none';
-	aboutButton.style.display = 'block';
-	welcomeArea.style.display = 'block';
+	instructionsButton.style.display = 'flex';
+	if (sessionStorage.getItem('playing') === 'welcome') {
+		instructionsModal.style.display = 'none';
+		modalTextbox.style.display = 'none';
+		instructionsButton.style.display = 'block';
+		welcomeArea.style.display = 'block';
+	} else if (sessionStorage.getItem('playing') === 'category') {
+		categorySelectionArea.style.display = 'block';
+	} else if (sessionStorage.getItem('playing') === 'gameover') {
+		gameOverDisplayArea.style.display = 'block';
+	} else {
+		gameplayArea.style.display = 'block';
+	}
 }
 
 //Begins the gameplay by setting current user name to the input value, resets the score, clears the welcome/instructions screen, and triggers the first question
@@ -186,11 +201,15 @@ function gameStart() {
 	categorySelectionArea.style.display = 'none';
 	gameplayArea.style.display = 'block';
 	answersDisplayArea.style.display = 'block';
+	sessionStorage.setItem('playing', 'gameplay');
+
 	askQuestionAPI();
 }
 
 //Triggers the Game Over Screen once 10 questions have been asked
 function gameOver() {
+	sessionStorage.setItem('playing', 'gameover');
+	instructionsButton.display = 'none';
 	gameplayArea.style.display = 'none';
 	scoreDisplay.style.display = 'none';
 	gameOverDisplayArea.style.display = 'block';
