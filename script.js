@@ -159,7 +159,7 @@ newGameButton.addEventListener('click', (event) => {
 	score = 0;
 	currentCategory = '';
 	gameOverDisplayArea.style.display = 'none';
-	categorySelectionArea.style.display = 'block';
+	welcomeArea.style.display = 'block';
 });
 
 ////////////Functions//////////////
