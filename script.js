@@ -158,6 +158,7 @@ newGameButton.addEventListener('click', (event) => {
 	questionIndex = 0;
 	score = 0;
 	currentCategory = '';
+	sessionStorage.setItem('playing', 'welcome');
 	gameOverDisplayArea.style.display = 'none';
 	welcomeArea.style.display = 'block';
 });
@@ -236,42 +237,33 @@ function decodeHTML(html) {
 }
 
 //Uses an API to populate question data based on difficulty and category selected
+function getQuestion(difficultyLevel) {
+	fetch(`${url}&difficulty=${difficultyLevel}${currentCategory}`)
+		.then((res) => res.json())
+		.then((resJson) => {
+			difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
+			categoryDisplay.innerText = `${resJson.results[0].category}`;
+			questionTextDisplay.innerText = decodeHTML(resJson.results[0].question);
+			answersDisplayArea.setAttribute(
+				'data-correct',
+				resJson.results[0].correct_answer
+			);
+			answerAssignmentAPI(resJson);
+		});
+}
+
+//Uses an API to populate question data based on difficulty and category selected
 function askQuestionAPI() {
 	nextButton.style.display = 'none';
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
 	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
 
 	if (questionIndex < 5) {
-		fetch(`${url}&difficulty=easy${currentCategory}`)
-			.then((res) => res.json())
-			.then((resJson) => {
-				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
-				categoryDisplay.innerText = `${resJson.results[0].category}`;
-				questionTextDisplay.innerText = decodeHTML(resJson.results[0].question);
-				answersDisplayArea.setAttribute(
-					'data-correct',
-					resJson.results[0].correct_answer
-				);
-				answerAssignmentAPI(resJson);
-			});
+		getQuestion('easy');
 	} else if (questionIndex < 8) {
-		fetch(`${url}&difficulty=medium${currentCategory}`)
-			.then((res) => res.json())
-			.then((resJson) => {
-				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
-				categoryDisplay.innerText = `${resJson.results[0].category}`;
-				questionTextDisplay.innerText = decodeHTML(resJson.results[0].question);
-				answerAssignmentAPI(resJson);
-			});
+		getQuestion('medium');
 	} else {
-		fetch(`${url}&difficulty=hard${currentCategory}`)
-			.then((res) => res.json())
-			.then((resJson) => {
-				difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
-				categoryDisplay.innerText = `${resJson.results[0].category}`;
-				questionTextDisplay.innerText = decodeHTML(resJson.results[0].question);
-				answerAssignmentAPI(resJson);
-			});
+		getQuestion('hard');
 	}
 }
 
