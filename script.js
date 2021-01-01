@@ -5,6 +5,7 @@ let score = 0;
 let questionIndex = 0;
 let currentUsername = '';
 let currentCategory = '';
+let questionArray = [];
 const hard = 20;
 const medium = 10;
 const easy = 5;
@@ -158,6 +159,7 @@ newGameButton.addEventListener('click', (event) => {
 	questionIndex = 0;
 	score = 0;
 	currentCategory = '';
+	username.value='';
 	sessionStorage.setItem('playing', 'welcome');
 	gameOverDisplayArea.style.display = 'none';
 	welcomeArea.style.display = 'block';
@@ -203,7 +205,6 @@ function gameStart() {
 	gameplayArea.style.display = 'block';
 	answersDisplayArea.style.display = 'block';
 	sessionStorage.setItem('playing', 'gameplay');
-
 	askQuestionAPI();
 }
 
@@ -217,7 +218,6 @@ function gameOver() {
 	newGameButton.style.display = 'block';
 	finalScore.style.display = 'block';
 	finalScore.innerText = `${currentUsername}'s Score: ${score}`;
-
 	if (score < 30) {
 		gameOverMessage.innerText =
 			"That wasn't a great round 😩 ...keep working at it.";
@@ -241,6 +241,12 @@ function getQuestion(difficultyLevel) {
 	fetch(`${url}&difficulty=${difficultyLevel}${currentCategory}`)
 		.then((res) => res.json())
 		.then((resJson) => {
+			for (let i = 0; i < questionArray.length; i++) {
+				if (resJson.results[0].question === questionArray[i]) {
+					askQuestionAPI();
+				}
+			}
+			questionArray.push(resJson.results[0].question);
 			difficultyDisplay.innerText = `Difficulty: ${resJson.results[0].difficulty.toUpperCase()}`;
 			categoryDisplay.innerText = `${resJson.results[0].category}`;
 			questionTextDisplay.innerText = decodeHTML(resJson.results[0].question);
@@ -257,7 +263,6 @@ function askQuestionAPI() {
 	nextButton.style.display = 'none';
 	questionNumDisplay.innerText = `Question ${questionIndex + 1}`;
 	scoreDisplay.innerHTML = `${currentUsername}'s Score: ${score}`;
-
 	if (questionIndex < 5) {
 		getQuestion('easy');
 	} else if (questionIndex < 8) {
